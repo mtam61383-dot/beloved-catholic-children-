@@ -1,1 +1,507 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản trị - Beloved Catholic Children</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f7fc;
+      color: #123;
+    }
+
+    header {
+      background: #0d6efd;
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    header p {
+      margin: 8px 0 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .box {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+    }
+
+    h2 {
+      color: #0d6efd;
+      margin-top: 0;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0 15px;
+      border: 1px solid #ccd6e0;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 15px;
+      background: #0d6efd;
+      color: white;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .logout {
+      background: #dc3545;
+      float: right;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .post {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+
+    .post h3 {
+      margin-top: 0;
+      color: #0d6efd;
+    }
+
+    .post img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+
+    .delete {
+      background: #dc3545;
+      margin-top: 10px;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Beloved Catholic Children</h1>
+  <p>Trang quản trị</p>
+</header>
+
+<div class="container">
+
+  <!-- ĐĂNG NHẬP -->
+  <div class="box" id="loginBox">
+    <h2>🔐 Đăng nhập quản trị</h2>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Email quản trị"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Mật khẩu"
+    >
+
+    <button id="loginBtn">Đăng nhập</button>
+
+    <div class="message" id="loginMessage"></div>
+  </div>
+
+
+  <!-- KHU VỰC QUẢN TRỊ -->
+  <div class="box hidden" id="adminBox">
+
+    <button class="logout" id="logoutBtn">
+      Đăng xuất
+    </button>
+
+    <h2>📝 Đăng bài mới</h2>
+
+    <label>Tiêu đề</label>
+    <input
+      type="text"
+      id="title"
+      placeholder="Nhập tiêu đề bài viết"
+    >
+
+    <label>Nội dung</label>
+    <textarea
+      id="content"
+      placeholder="Nhập nội dung bài viết..."
+    ></textarea>
+
+    <label>Link hình ảnh</label>
+    <input
+      type="text"
+      id="image"
+      placeholder="Dán link hình ảnh (nếu có)"
+    >
+
+    <button id="postBtn">
+      Đăng bài
+    </button>
+
+    <div class="message" id="postMessage"></div>
+
+  </div>
+
+
+  <!-- DANH SÁCH BÀI -->
+  <div class="box hidden" id="postsBox">
+
+    <h2>📚 Các bài đã đăng</h2>
+
+    <div id="postsList">
+      Đang tải bài viết...
+    </div>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+  }
+    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+  import {
+    getDatabase,
+    ref,
+    push,
+    onValue,
+    remove
+  }
+    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
+
+  // FIREBASE
+  const firebaseConfig = {
+    apiKey: "AIzaSyA_b4h2_RP7vSMvM8eMxplFr7WSR2flzdg",
+    authDomain: "beloved-catholic-children.firebaseapp.com",
+    projectId: "beloved-catholic-children",
+    storageBucket: "beloved-catholic-children.firebasestorage.app",
+    messagingSenderId: "657011413453",
+    appId: "1:657011413453:web:02fbdbd6ec8f5b04157484",
+    measurementId: "G-VTL7T0S9EY"
+  };
+
+
+  const app = initializeApp(firebaseConfig);
+
+  const auth = getAuth(app);
+
+  const db = getDatabase(app);
+
+
+  // ELEMENTS
+  const loginBox = document.getElementById("loginBox");
+  const adminBox = document.getElementById("adminBox");
+  const postsBox = document.getElementById("postsBox");
+
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  const loginMessage = document.getElementById("loginMessage");
+  const postMessage = document.getElementById("postMessage");
+
+  const title = document.getElementById("title");
+  const content = document.getElementById("content");
+  const image = document.getElementById("image");
+
+  const postBtn = document.getElementById("postBtn");
+
+  const postsList = document.getElementById("postsList");
+
+
+  // ĐĂNG NHẬP
+  loginBtn.addEventListener("click", async () => {
+
+    const emailValue = email.value.trim();
+    const passwordValue = password.value;
+
+    if (!emailValue || !passwordValue) {
+
+      loginMessage.textContent =
+        "Vui lòng nhập email và mật khẩu.";
+
+      return;
+    }
+
+    try {
+
+      await signInWithEmailAndPassword(
+        auth,
+        emailValue,
+        passwordValue
+      );
+
+      loginMessage.textContent = "";
+
+    } catch (error) {
+
+      loginMessage.textContent =
+        "Đăng nhập thất bại: " + error.message;
+
+    }
+
+  });
+
+
+  // KIỂM TRA ĐĂNG NHẬP
+  onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+
+      loginBox.classList.add("hidden");
+
+      adminBox.classList.remove("hidden");
+
+      postsBox.classList.remove("hidden");
+
+      loadPosts();
+
+    } else {
+
+      loginBox.classList.remove("hidden");
+
+      adminBox.classList.add("hidden");
+
+      postsBox.classList.add("hidden");
+
+    }
+
+  });
+
+
+  // ĐĂNG XUẤT
+  logoutBtn.addEventListener("click", async () => {
+
+    await signOut(auth);
+
+  });
+
+
+  // ĐĂNG BÀI
+  postBtn.addEventListener("click", async () => {
+
+    const titleValue = title.value.trim();
+    const contentValue = content.value.trim();
+    const imageValue = image.value.trim();
+
+    if (!titleValue || !contentValue) {
+
+      postMessage.textContent =
+        "Vui lòng nhập tiêu đề và nội dung.";
+
+      return;
+    }
+
+    try {
+
+      await push(
+        ref(db, "posts"),
+        {
+          title: titleValue,
+          content: contentValue,
+          image: imageValue,
+          date: new Date().toLocaleString("vi-VN")
+        }
+      );
+
+      title.value = "";
+      content.value = "";
+      image.value = "";
+
+      postMessage.textContent =
+        "✅ Đăng bài thành công!";
+
+      setTimeout(() => {
+        postMessage.textContent = "";
+      }, 3000);
+
+    } catch (error) {
+
+      postMessage.textContent =
+        "Lỗi: " + error.message;
+
+    }
+
+  });
+
+
+  // HIỂN THỊ BÀI ĐÃ ĐĂNG
+  function loadPosts() {
+
+    const postsRef = ref(db, "posts");
+
+    onValue(postsRef, (snapshot) => {
+
+      postsList.innerHTML = "";
+
+      const data = snapshot.val();
+
+      if (!data) {
+
+        postsList.innerHTML =
+          "<p>Chưa có bài viết nào.</p>";
+
+        return;
+      }
+
+      const posts = Object.entries(data).reverse();
+
+      posts.forEach(([id, post]) => {
+
+        const div = document.createElement("div");
+
+        div.className = "post";
+
+        const safeTitle =
+          escapeHTML(post.title || "");
+
+        const safeContent =
+          escapeHTML(post.content || "");
+
+        const safeDate =
+          escapeHTML(post.date || "");
+
+        let html = `
+          <h3>${safeTitle}</h3>
+          <p>${safeContent.replace(/\n/g, "<br>")}</p>
+          <small>${safeDate}</small>
+        `;
+
+        if (post.image) {
+
+          html += `
+            <br>
+            <img
+              src="${escapeHTML(post.image)}"
+              alt="Hình ảnh bài viết"
+            >
+          `;
+
+        }
+
+        html += `
+          <br>
+          <button
+            class="delete"
+            data-id="${id}"
+          >
+            Xóa bài
+          </button>
+        `;
+
+        div.innerHTML = html;
+
+        div
+          .querySelector(".delete")
+          .addEventListener("click", () => {
+
+            deletePost(id);
+
+          });
+
+        postsList.appendChild(div);
+
+      });
+
+    });
+
+  }
+
+
+  // XÓA BÀI
+  async function deletePost(id) {
+
+    if (!confirm("Bạn có chắc muốn xóa bài này không?")) {
+      return;
+    }
+
+    try {
+
+      await remove(
+        ref(db, "posts/" + id)
+      );
+
+    } catch (error) {
+
+      alert("Không thể xóa bài: " + error.message);
+
+    }
+
+  }
+
+
+  // CHỐNG CHÈN HTML
+  function escapeHTML(text) {
+
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+</script>
+
+</body>
+</html>
