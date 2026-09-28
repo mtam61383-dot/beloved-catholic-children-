@@ -1,14 +1,312 @@
 <!doctype html>
 <html lang="vi">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Beloved Catholic Children</title><link rel="stylesheet" href="style.css"></head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Beloved Catholic Children</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
 <body>
-<header><div class="brand">✝ BELOVED CATHOLIC CHILDREN</div><nav><a href="#home">Trang chủ</a><a href="#gioi-thieu">Giới thiệu</a><a href="#tin-tuc">Tin tức</a><a href="#sinh-hoat">Sinh hoạt</a><a href="#thanh-nhac">Thánh nhạc</a><a href="#lien-he">Liên hệ</a></nav></header>
-<section id="home" class="hero"><div><p>HỘI BELOVED CATHOLIC CHILDREN</p><h1>Yêu mến Chúa<br><span>Sống Đức Tin – Phục vụ</span></h1><p>Cùng nhau bước đi trong tình yêu Đức Kitô.</p><a class="btn" href="#gioi-thieu">Tìm hiểu về Hội</a></div></section>
-<section id="gioi-thieu"><h2>Giới thiệu Hội</h2><div class="grid"><article><h3>Beloved Catholic Children</h3><p>Một cộng đoàn dành cho thiếu nhi và người trẻ Công giáo, cùng nhau cầu nguyện, học hỏi, sinh hoạt và phục vụ.</p></article><article class="quote">“Yêu mến đơn sơ thánh hóa.”</article></div></section>
-<section id="tin-tuc" class="light"><h2>Tin tức & hoạt động</h2><div class="cards"><article><small>HOẠT ĐỘNG</small><h3>Sống Đức Tin Trong Thời Đại Số</h3><p>Cùng khám phá cách sống và làm chứng cho Đức tin giữa cuộc sống hiện đại.</p></article><article><small>CHỦ ĐỀ</small><h3>Các Thánh Giữa Người Nghèo</h3><p>Học nơi các thánh tinh thần yêu thương và phục vụ những người bé nhỏ.</p></article><article><small>THÁNH NHẠC</small><h3>Âm nhạc Công giáo</h3><p>Chia sẻ các hoạt động và chương trình thánh nhạc của Hội.</p></article></div></section>
-<section id="sinh-hoat"><h2>Sinh hoạt</h2><article class="event"><div><small>CHỦ ĐỀ SINH HOẠT</small><h3>Sống Đức Tin Trong Thời Đại Số</h3><p>18:00 • Biên Hòa</p></div><strong>18:00</strong></article></section>
-<section id="thanh-nhac" class="light"><h2>Thánh nhạc</h2><article><h3>♪ Âm nhạc Công giáo</h3><p>Nơi chia sẻ các hoạt động phục vụ bằng âm nhạc.</p></article></section>
-<section id="lien-he"><h2>Kết nối với Hội</h2><p>Theo dõi Beloved Catholic Children trên các mạng xã hội chính thức.</p><div><a class="social" href="#">Facebook</a> <a class="social" href="#">TikTok</a></div></section>
-<footer>✝ BELOVED CATHOLIC CHILDREN<br><small>Yêu mến Chúa • Sống Đức Tin • Phục vụ</small></footer>
-</body></html>
-<img src="logo.png" alt="Beloved Catholic Children" class="logo">
+
+<header>
+  <div class="brand">
+    <img src="logo.png" alt="Beloved Catholic Children" class="logo">
+    <span>BELOVED CATHOLIC CHILDREN</span>
+  </div>
+
+  <nav>
+    <a href="#home">Trang chủ</a>
+    <a href="#gioi-thieu">Giới thiệu</a>
+    <a href="#tin-tuc">Tin tức</a>
+    <a href="#sinh-hoat">Sinh hoạt</a>
+    <a href="#thanh-nhac">Thánh nhạc</a>
+    <a href="#lien-he">Liên hệ</a>
+  </nav>
+</header>
+
+
+<section id="home" class="hero">
+  <div>
+    <p>HỘI BELOVED CATHOLIC CHILDREN</p>
+
+    <h1>
+      Yêu mến Chúa<br>
+      <span>Sống Đức Tin – Phục vụ</span>
+    </h1>
+
+    <p>
+      Cùng nhau bước đi trong tình yêu Đức Kitô.
+    </p>
+
+    <a class="btn" href="#gioi-thieu">
+      Tìm hiểu về Hội
+    </a>
+  </div>
+</section>
+
+
+<section id="gioi-thieu">
+  <h2>Giới thiệu Hội</h2>
+
+  <div class="grid">
+
+    <article>
+      <h3>Beloved Catholic Children</h3>
+
+      <p>
+        Một cộng đoàn dành cho thiếu nhi và người trẻ Công giáo,
+        cùng nhau cầu nguyện, học hỏi, sinh hoạt và phục vụ.
+      </p>
+    </article>
+
+    <article class="quote">
+      “Yêu mến đơn sơ thánh hóa.”
+    </article>
+
+  </div>
+</section>
+
+
+<!-- TIN TỨC TỪ FIREBASE -->
+
+<section id="tin-tuc" class="light">
+
+  <h2>Tin tức & hoạt động</h2>
+
+  <div class="cards" id="postsList">
+
+    <p>Đang tải bài viết...</p>
+
+  </div>
+
+</section>
+
+
+<section id="sinh-hoat">
+
+  <h2>Sinh hoạt</h2>
+
+  <article class="event">
+
+    <div>
+      <small>CHỦ ĐỀ SINH HOẠT</small>
+
+      <h3>
+        Sống Đức Tin Trong Thời Đại Số
+      </h3>
+
+      <p>
+        18:00 • Biên Hòa
+      </p>
+    </div>
+
+    <strong>18:00</strong>
+
+  </article>
+
+</section>
+
+
+<section id="thanh-nhac" class="light">
+
+  <h2>Thánh nhạc</h2>
+
+  <article>
+    <h3>♪ Âm nhạc Công giáo</h3>
+
+    <p>
+      Nơi chia sẻ các hoạt động phục vụ bằng âm nhạc.
+    </p>
+  </article>
+
+</section>
+
+
+<section id="lien-he">
+
+  <h2>Kết nối với Hội</h2>
+
+  <p>
+    Theo dõi Beloved Catholic Children
+    trên các mạng xã hội chính thức.
+  </p>
+
+  <div>
+    <a class="social" href="#">Facebook</a>
+    <a class="social" href="#">TikTok</a>
+  </div>
+
+</section>
+
+
+<footer>
+
+  ✝ BELOVED CATHOLIC CHILDREN
+
+  <br>
+
+  <small>
+    Yêu mến Chúa • Sống Đức Tin • Phục vụ
+  </small>
+
+</footer>
+
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+  import {
+    getDatabase,
+    ref,
+    onValue
+  }
+    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
+
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyA_b4h2_RP7vSMvM8eMxplFr7WSR2flzdg",
+
+    authDomain:
+      "beloved-catholic-children.firebaseapp.com",
+
+    projectId:
+      "beloved-catholic-children",
+
+    storageBucket:
+      "beloved-catholic-children.firebasestorage.app",
+
+    messagingSenderId:
+      "657011413453",
+
+    appId:
+      "1:657011413453:web:02fbdbd6ec8f5b04157484",
+
+    measurementId:
+      "G-VTL7T0S9EY"
+
+  };
+
+
+  const app = initializeApp(firebaseConfig);
+
+  const db = getDatabase(app);
+
+
+  const postsList =
+    document.getElementById("postsList");
+
+
+  function escapeHTML(text) {
+
+    return String(text)
+
+      .replace(/&/g, "&amp;")
+
+      .replace(/</g, "&lt;")
+
+      .replace(/>/g, "&gt;")
+
+      .replace(/"/g, "&quot;")
+
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  const postsRef = ref(db, "posts");
+
+
+  onValue(postsRef, (snapshot) => {
+
+    postsList.innerHTML = "";
+
+    const data = snapshot.val();
+
+
+    if (!data) {
+
+      postsList.innerHTML =
+        "<p>Chưa có bài viết nào.</p>";
+
+      return;
+
+    }
+
+
+    const posts =
+      Object.entries(data).reverse();
+
+
+    posts.forEach(([id, post]) => {
+
+      const article =
+        document.createElement("article");
+
+      article.className = "post-card";
+
+
+      const title =
+        escapeHTML(post.title || "Không có tiêu đề");
+
+
+      const content =
+        escapeHTML(post.content || "");
+
+
+      const date =
+        escapeHTML(post.date || "");
+
+
+      let html = `
+
+        <small>TIN TỨC</small>
+
+        <h3>${title}</h3>
+
+        <p>
+          ${content.replace(/\n/g, "<br>")}
+        </p>
+
+        <small>${date}</small>
+
+      `;
+
+
+      if (post.image) {
+
+        html += `
+
+          <img
+            src="${escapeHTML(post.image)}"
+            alt="Hình ảnh bài viết"
+            style="
+              width:100%;
+              max-width:600px;
+              border-radius:12px;
+              margin-top:15px;
+            "
+          >
+
+        `;
+
+      }
+
+
+      article.innerHTML = html;
+
+      postsList.appendChild(article);
+
+    });
+
+  });
+
+</script>
+
+</body>
+</html>
