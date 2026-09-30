@@ -133,6 +133,8 @@
 
     .post img {
       max-width: 100%;
+      max-height: 450px;
+      object-fit: contain;
       border-radius: 10px;
       margin-top: 10px;
     }
@@ -142,6 +144,54 @@
       padding: 15px;
       border-radius: 10px;
       margin-top: 10px;
+    }
+
+    .image-box {
+      border: 2px dashed #c8d6e5;
+      border-radius: 12px;
+      padding: 18px;
+      background: #f8fbff;
+      margin-bottom: 15px;
+    }
+
+    .image-box-title {
+      font-weight: bold;
+      color: #0d6efd;
+      margin-bottom: 10px;
+    }
+
+    .image-preview {
+      display: none;
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-top: 15px;
+      background: #eee;
+    }
+
+    .upload-label {
+      display: inline-block;
+      background: #198754;
+      color: white;
+      padding: 11px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 4px 0 12px;
+    }
+
+    .upload-label:hover {
+      opacity: .9;
+    }
+
+    #imageInput {
+      display: none;
+    }
+
+    .upload-status {
+      font-size: 14px;
+      color: #555;
+      margin-top: 5px;
     }
 
     .logo-preview {
@@ -334,24 +384,47 @@
         placeholder="Nội dung bài viết..."
       ></textarea>
 
-     <label>Hình ảnh bài viết</label>
 
-<input
-  type="file"
-  id="imageInput"
-  accept="image/*"
->
+      <!-- HÌNH ẢNH -->
+      <div class="image-box">
 
-<img
-  id="previewImage"
-  style="display:none;
-         width:100%;
-         max-height:400px;
-         object-fit:contain;
-         margin-top:10px;
-         border-radius:10px;"
->
-      >
+        <div class="image-box-title">
+          🖼️ Hình ảnh bài viết
+        </div>
+
+        <small>
+          Bạn có thể dán link ảnh hoặc tải ảnh trực tiếp từ điện thoại.
+        </small>
+
+        <label for="imageInput" class="upload-label">
+          📁 Tải ảnh lên
+        </label>
+
+        <input
+          type="file"
+          id="imageInput"
+          accept="image/*"
+        >
+
+        <input
+          type="url"
+          id="newsImage"
+          placeholder="🔗 Hoặc dán link ảnh vào đây..."
+        >
+
+        <div
+          id="uploadStatus"
+          class="upload-status"
+        ></div>
+
+        <img
+          id="previewImage"
+          class="image-preview"
+          alt="Xem trước ảnh"
+        >
+
+      </div>
+
 
       <button id="addNews">
         ➕ Đăng bài
@@ -491,6 +564,7 @@
       >
 
       <div class="preview">
+
         <p>Xem trước:</p>
 
         <img
@@ -499,6 +573,7 @@
           src="logo.png"
           alt="Logo"
         >
+
       </div>
 
       <button id="saveLogo">
@@ -516,16 +591,20 @@
 
 <script type="module">
 
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  /* =========================
+     FIREBASE
+  ========================= */
+
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
   import {
     getAuth,
     signInWithEmailAndPassword,
     onAuthStateChanged,
     signOut
-  }
-    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
   import {
     getDatabase,
@@ -534,13 +613,24 @@
     set,
     onValue,
     remove
-  }
-    from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 
+  import {
+    getStorage,
+    storageRef,
+    uploadBytes,
+    getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
+
+
+  /* =========================
+     FIREBASE CONFIG
+  ========================= */
 
   const firebaseConfig = {
 
-    apiKey: "AIzaSyA_b4h2_RP7vSMvM8eMxplFr7WSR2flzdg",
+    apiKey:
+      "AIzaSyA_b4h2_RP7vSMvM8eMxplFr7WSR2flzdg",
 
     authDomain:
       "beloved-catholic-children.firebaseapp.com",
@@ -563,12 +653,22 @@
   };
 
 
-  const app = initializeApp(firebaseConfig);
+  const app =
+    initializeApp(firebaseConfig);
 
-  const auth = getAuth(app);
+  const auth =
+    getAuth(app);
 
-  const db = getDatabase(app);
+  const db =
+    getDatabase(app);
 
+  const storage =
+    getStorage(app);
+
+
+  /* =========================
+     ELEMENTS
+  ========================= */
 
   const loginBox =
     document.getElementById("loginBox");
@@ -579,18 +679,40 @@
   const loginMessage =
     document.getElementById("loginMessage");
 
+  const imageInput =
+    document.getElementById("imageInput");
 
-  /* ĐĂNG NHẬP */
+  const newsImage =
+    document.getElementById("newsImage");
+
+  const previewImage =
+    document.getElementById("previewImage");
+
+  const uploadStatus =
+    document.getElementById("uploadStatus");
+
+
+  let uploadedImageURL = "";
+
+
+  /* =========================
+     ĐĂNG NHẬP
+  ========================= */
 
   document
     .getElementById("loginBtn")
     .addEventListener("click", async () => {
 
       const email =
-        document.getElementById("email").value.trim();
+        document
+          .getElementById("email")
+          .value
+          .trim();
 
       const password =
-        document.getElementById("password").value;
+        document
+          .getElementById("password")
+          .value;
 
       if (!email || !password) {
 
@@ -620,41 +742,61 @@
     });
 
 
-  /* KIỂM TRA ĐĂNG NHẬP */
+  /* =========================
+     KIỂM TRA ĐĂNG NHẬP
+  ========================= */
 
-  onAuthStateChanged(auth, user => {
+  onAuthStateChanged(
+    auth,
+    user => {
 
-    if (user) {
+      if (user) {
 
-      loginBox.classList.add("hidden");
+        loginBox
+          .classList
+          .add("hidden");
 
-      adminArea.classList.remove("hidden");
+        adminArea
+          .classList
+          .remove("hidden");
 
-      loadAll();
+        loadAll();
 
-    } else {
+      } else {
 
-      loginBox.classList.remove("hidden");
+        loginBox
+          .classList
+          .remove("hidden");
 
-      adminArea.classList.add("hidden");
+        adminArea
+          .classList
+          .add("hidden");
+
+      }
 
     }
+  );
 
-  });
 
-
-  /* ĐĂNG XUẤT */
+  /* =========================
+     ĐĂNG XUẤT
+  ========================= */
 
   document
     .getElementById("logoutBtn")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      await signOut(auth);
+        await signOut(auth);
 
-    });
+      }
+    );
 
 
-  /* CHUYỂN TRANG QUẢN TRỊ */
+  /* =========================
+     CHUYỂN PANEL
+  ========================= */
 
   window.showPanel = function(id) {
 
@@ -662,344 +804,741 @@
       .querySelectorAll(".panel")
       .forEach(panel => {
 
-        panel.classList.remove("active");
+        panel
+          .classList
+          .remove("active");
 
       });
 
     document
       .getElementById(id)
-      .classList.add("active");
+      .classList
+      .add("active");
 
   };
 
 
-  /* ESCAPE HTML */
+  /* =========================
+     ESCAPE HTML
+  ========================= */
 
   function escapeHTML(text) {
 
     return String(text)
 
-      .replace(/&/g, "&amp;")
+      .replace(
+        /&/g,
+        "&amp;"
+      )
 
-      .replace(/</g, "&lt;")
+      .replace(
+        /</g,
+        "&lt;"
+      )
 
-      .replace(/>/g, "&gt;")
+      .replace(
+        />/g,
+        "&gt;"
+      )
 
-      .replace(/"/g, "&quot;")
+      .replace(
+        /"/g,
+        "&quot;"
+      )
 
-      .replace(/'/g, "&#039;");
+      .replace(
+        /'/g,
+        "&#039;"
+      );
 
   }
 
 
-  /* TRANG CHỦ */
+  /* =========================
+     XEM TRƯỚC LINK ẢNH
+  ========================= */
+
+  newsImage
+    .addEventListener(
+      "input",
+      () => {
+
+        const url =
+          newsImage.value.trim();
+
+        if (url) {
+
+          uploadedImageURL = "";
+
+          previewImage.src = url;
+
+          previewImage.style.display =
+            "block";
+
+          uploadStatus.textContent =
+            "🔗 Đang sử dụng link ảnh.";
+
+        } else {
+
+          previewImage.style.display =
+            "none";
+
+          uploadStatus.textContent = "";
+
+        }
+
+      }
+    );
+
+
+  /* =========================
+     TẢI ẢNH LÊN FIREBASE
+  ========================= */
+
+  imageInput
+    .addEventListener(
+      "change",
+      async () => {
+
+        const file =
+          imageInput.files[0];
+
+        if (!file) {
+          return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+
+          uploadStatus.textContent =
+            "❌ Vui lòng chọn file hình ảnh.";
+
+          imageInput.value = "";
+
+          return;
+        }
+
+
+        uploadStatus.textContent =
+          "⏳ Đang tải ảnh lên...";
+
+        previewImage.style.display =
+          "none";
+
+
+        try {
+
+          const user =
+            auth.currentUser;
+
+          if (!user) {
+
+            uploadStatus.textContent =
+              "❌ Bạn chưa đăng nhập.";
+
+            return;
+          }
+
+
+          const safeName =
+            file.name
+              .replace(
+                /[^a-zA-Z0-9._-]/g,
+                "_"
+              );
+
+
+          const fileName =
+            Date.now() +
+            "_" +
+            safeName;
+
+
+          const imageRef =
+            storageRef(
+              storage,
+              "news-images/" +
+              user.uid +
+              "/" +
+              fileName
+            );
+
+
+          await uploadBytes(
+            imageRef,
+            file
+          );
+
+
+          const downloadURL =
+            await getDownloadURL(
+              imageRef
+            );
+
+
+          uploadedImageURL =
+            downloadURL;
+
+
+          newsImage.value =
+            downloadURL;
+
+
+          previewImage.src =
+            downloadURL;
+
+          previewImage.style.display =
+            "block";
+
+
+          uploadStatus.textContent =
+            "✅ Tải ảnh thành công!";
+
+        } catch (error) {
+
+          console.error(error);
+
+          uploadStatus.textContent =
+            "❌ Không thể tải ảnh. Kiểm tra Firebase Storage.";
+
+        }
+
+      }
+    );
+
+
+  /* =========================
+     TRANG CHỦ
+  ========================= */
 
   document
     .getElementById("saveHome")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const data = {
+        const data = {
 
-        small:
-          document.getElementById("homeSmall").value,
+          small:
+            document
+              .getElementById("homeSmall")
+              .value,
 
-        title:
-          document.getElementById("homeTitle").value,
+          title:
+            document
+              .getElementById("homeTitle")
+              .value,
 
-        subtitle:
-          document.getElementById("homeSubtitle").value,
+          subtitle:
+            document
+              .getElementById("homeSubtitle")
+              .value,
 
-        description:
-          document.getElementById("homeDescription").value
+          description:
+            document
+              .getElementById("homeDescription")
+              .value
 
-      };
-
-      await set(
-        ref(db, "siteContent/home"),
-        data
-      );
-
-      document.getElementById("homeMessage")
-        .textContent = "✅ Đã lưu Trang chủ.";
-
-    });
+        };
 
 
-  /* GIỚI THIỆU */
+        await set(
+          ref(
+            db,
+            "siteContent/home"
+          ),
+          data
+        );
+
+
+        document
+          .getElementById("homeMessage")
+          .textContent =
+          "✅ Đã lưu Trang chủ.";
+
+      }
+    );
+
+
+  /* =========================
+     GIỚI THIỆU
+  ========================= */
 
   document
     .getElementById("saveAbout")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const data = {
+        const data = {
 
-        title:
-          document.getElementById("aboutTitle").value,
+          title:
+            document
+              .getElementById("aboutTitle")
+              .value,
 
-        content:
-          document.getElementById("aboutContent").value,
+          content:
+            document
+              .getElementById("aboutContent")
+              .value,
 
-        quote:
-          document.getElementById("aboutQuote").value
+          quote:
+            document
+              .getElementById("aboutQuote")
+              .value
 
-      };
-
-      await set(
-        ref(db, "siteContent/about"),
-        data
-      );
-
-      document.getElementById("aboutMessage")
-        .textContent = "✅ Đã lưu Giới thiệu.";
-
-    });
+        };
 
 
-  /* THÊM TIN TỨC */
+        await set(
+          ref(
+            db,
+            "siteContent/about"
+          ),
+          data
+        );
+
+
+        document
+          .getElementById("aboutMessage")
+          .textContent =
+          "✅ Đã lưu Giới thiệu.";
+
+      }
+    );
+
+
+  /* =========================
+     ĐĂNG TIN TỨC
+  ========================= */
 
   document
     .getElementById("addNews")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const title =
-        document.getElementById("newsTitle").value.trim();
+        const title =
+          document
+            .getElementById("newsTitle")
+            .value
+            .trim();
 
-      const content =
-        document.getElementById("newsContent").value.trim();
+        const content =
+          document
+            .getElementById("newsContent")
+            .value
+            .trim();
 
-      const image =
-        document.getElementById("newsImage").value.trim();
+        const image =
+          newsImage
+            .value
+            .trim();
 
-      if (!title || !content) {
 
-        document.getElementById("newsMessage")
+        if (!title || !content) {
+
+          document
+            .getElementById("newsMessage")
+            .textContent =
+            "Vui lòng nhập tiêu đề và nội dung.";
+
+          return;
+        }
+
+
+        document
+          .getElementById("newsMessage")
           .textContent =
-          "Vui lòng nhập tiêu đề và nội dung.";
+          "⏳ Đang đăng bài...";
 
-        return;
-      }
 
-      await push(
-        ref(db, "posts"),
-        {
+        try {
 
-          title: title,
+          await push(
+            ref(
+              db,
+              "posts"
+            ),
+            {
 
-          content: content,
+              title:
+                title,
 
-          image: image,
+              content:
+                content,
 
-          date:
-            new Date().toLocaleString("vi-VN")
+              image:
+                image,
+
+              date:
+                new Date()
+                  .toLocaleString(
+                    "vi-VN"
+                  )
+
+            }
+          );
+
+
+          document
+            .getElementById("newsTitle")
+            .value = "";
+
+          document
+            .getElementById("newsContent")
+            .value = "";
+
+          newsImage.value = "";
+
+          imageInput.value = "";
+
+          uploadedImageURL = "";
+
+          previewImage.src = "";
+
+          previewImage.style.display =
+            "none";
+
+          uploadStatus.textContent =
+            "";
+
+
+          document
+            .getElementById("newsMessage")
+            .textContent =
+            "✅ Đã đăng bài thành công.";
+
+        } catch (error) {
+
+          console.error(error);
+
+          document
+            .getElementById("newsMessage")
+            .textContent =
+            "❌ Không thể đăng bài.";
 
         }
-      );
 
-      document.getElementById("newsTitle").value = "";
-
-      document.getElementById("newsContent").value = "";
-
-      document.getElementById("newsImage").value = "";
-
-      document.getElementById("newsMessage")
-        .textContent =
-        "✅ Đã đăng bài.";
-
-    });
+      }
+    );
 
 
-  /* SINH HOẠT */
+  /* =========================
+     SINH HOẠT
+  ========================= */
 
   document
     .getElementById("saveActivity")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const data = {
+        const data = {
 
-        title:
-          document.getElementById("activityTitle").value,
+          title:
+            document
+              .getElementById("activityTitle")
+              .value,
 
-        time:
-          document.getElementById("activityTime").value,
+          time:
+            document
+              .getElementById("activityTime")
+              .value,
 
-        place:
-          document.getElementById("activityPlace").value,
+          place:
+            document
+              .getElementById("activityPlace")
+              .value,
 
-        content:
-          document.getElementById("activityContent").value
+          content:
+            document
+              .getElementById("activityContent")
+              .value
 
-      };
-
-      await set(
-        ref(db, "siteContent/activity"),
-        data
-      );
-
-      document.getElementById("activityMessage")
-        .textContent =
-        "✅ Đã lưu Sinh hoạt.";
-
-    });
+        };
 
 
-  /* THÁNH NHẠC */
+        await set(
+          ref(
+            db,
+            "siteContent/activity"
+          ),
+          data
+        );
+
+
+        document
+          .getElementById("activityMessage")
+          .textContent =
+          "✅ Đã lưu Sinh hoạt.";
+
+      }
+    );
+
+
+  /* =========================
+     THÁNH NHẠC
+  ========================= */
 
   document
     .getElementById("saveMusic")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const data = {
+        const data = {
 
-        title:
-          document.getElementById("musicTitle").value,
+          title:
+            document
+              .getElementById("musicTitle")
+              .value,
 
-        content:
-          document.getElementById("musicContent").value
+          content:
+            document
+              .getElementById("musicContent")
+              .value
 
-      };
-
-      await set(
-        ref(db, "siteContent/music"),
-        data
-      );
-
-      document.getElementById("musicMessage")
-        .textContent =
-        "✅ Đã lưu Thánh nhạc.";
-
-    });
+        };
 
 
-  /* LIÊN HỆ */
+        await set(
+          ref(
+            db,
+            "siteContent/music"
+          ),
+          data
+        );
+
+
+        document
+          .getElementById("musicMessage")
+          .textContent =
+          "✅ Đã lưu Thánh nhạc.";
+
+      }
+    );
+
+
+  /* =========================
+     LIÊN HỆ
+  ========================= */
 
   document
     .getElementById("saveContact")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const data = {
+        const data = {
 
-        facebook:
-          document.getElementById("facebook").value,
+          facebook:
+            document
+              .getElementById("facebook")
+              .value,
 
-        tiktok:
-          document.getElementById("tiktok").value,
+          tiktok:
+            document
+              .getElementById("tiktok")
+              .value,
 
-        content:
-          document.getElementById("contactContent").value
+          content:
+            document
+              .getElementById("contactContent")
+              .value
 
-      };
-
-      await set(
-        ref(db, "siteContent/contact"),
-        data
-      );
-
-      document.getElementById("contactMessage")
-        .textContent =
-        "✅ Đã lưu Liên hệ.";
-
-    });
+        };
 
 
-  /* LOGO */
+        await set(
+          ref(
+            db,
+            "siteContent/contact"
+          ),
+          data
+        );
+
+
+        document
+          .getElementById("contactMessage")
+          .textContent =
+          "✅ Đã lưu Liên hệ.";
+
+      }
+    );
+
+
+  /* =========================
+     LOGO
+  ========================= */
 
   document
     .getElementById("saveLogo")
-    .addEventListener("click", async () => {
+    .addEventListener(
+      "click",
+      async () => {
 
-      const logo =
-        document.getElementById("logoFile").value.trim();
-
-      await set(
-        ref(db, "siteContent/logo"),
-        {
-          file: logo
-        }
-      );
-
-      document.getElementById("logoMessage")
-        .textContent =
-        "✅ Đã lưu Logo.";
-
-    });
+        const logo =
+          document
+            .getElementById("logoFile")
+            .value
+            .trim();
 
 
-  /* TẢI DỮ LIỆU */
+        await set(
+          ref(
+            db,
+            "siteContent/logo"
+          ),
+          {
+            file: logo
+          }
+        );
+
+
+        document
+          .getElementById("logoMessage")
+          .textContent =
+          "✅ Đã lưu Logo.";
+
+      }
+    );
+
+
+  /* =========================
+     TẢI DỮ LIỆU
+  ========================= */
 
   function loadAll() {
 
     onValue(
-      ref(db, "siteContent"),
+      ref(
+        db,
+        "siteContent"
+      ),
       snapshot => {
 
-        const data = snapshot.val() || {};
+        const data =
+          snapshot.val() || {};
 
-        const home = data.home || {};
 
-        document.getElementById("homeSmall").value =
+        /* TRANG CHỦ */
+
+        const home =
+          data.home || {};
+
+        document
+          .getElementById("homeSmall")
+          .value =
           home.small || "";
 
-        document.getElementById("homeTitle").value =
+        document
+          .getElementById("homeTitle")
+          .value =
           home.title || "";
 
-        document.getElementById("homeSubtitle").value =
+        document
+          .getElementById("homeSubtitle")
+          .value =
           home.subtitle || "";
 
-        document.getElementById("homeDescription").value =
+        document
+          .getElementById("homeDescription")
+          .value =
           home.description || "";
 
 
-        const about = data.about || {};
+        /* GIỚI THIỆU */
 
-        document.getElementById("aboutTitle").value =
+        const about =
+          data.about || {};
+
+        document
+          .getElementById("aboutTitle")
+          .value =
           about.title || "";
 
-        document.getElementById("aboutContent").value =
+        document
+          .getElementById("aboutContent")
+          .value =
           about.content || "";
 
-        document.getElementById("aboutQuote").value =
+        document
+          .getElementById("aboutQuote")
+          .value =
           about.quote || "";
 
 
-        const activity = data.activity || {};
+        /* SINH HOẠT */
 
-        document.getElementById("activityTitle").value =
+        const activity =
+          data.activity || {};
+
+        document
+          .getElementById("activityTitle")
+          .value =
           activity.title || "";
 
-        document.getElementById("activityTime").value =
+        document
+          .getElementById("activityTime")
+          .value =
           activity.time || "";
 
-        document.getElementById("activityPlace").value =
+        document
+          .getElementById("activityPlace")
+          .value =
           activity.place || "";
 
-        document.getElementById("activityContent").value =
+        document
+          .getElementById("activityContent")
+          .value =
           activity.content || "";
 
 
-        const music = data.music || {};
+        /* THÁNH NHẠC */
 
-        document.getElementById("musicTitle").value =
+        const music =
+          data.music || {};
+
+        document
+          .getElementById("musicTitle")
+          .value =
           music.title || "";
 
-        document.getElementById("musicContent").value =
+        document
+          .getElementById("musicContent")
+          .value =
           music.content || "";
 
 
-        const contact = data.contact || {};
+        /* LIÊN HỆ */
 
-        document.getElementById("facebook").value =
+        const contact =
+          data.contact || {};
+
+        document
+          .getElementById("facebook")
+          .value =
           contact.facebook || "";
 
-        document.getElementById("tiktok").value =
+        document
+          .getElementById("tiktok")
+          .value =
           contact.tiktok || "";
 
-        document.getElementById("contactContent").value =
+        document
+          .getElementById("contactContent")
+          .value =
           contact.content || "";
 
 
-        const logo = data.logo || {};
+        /* LOGO */
 
-        document.getElementById("logoFile").value =
+        const logo =
+          data.logo || {};
+
+        document
+          .getElementById("logoFile")
+          .value =
           logo.file || "logo.png";
 
       }
@@ -1011,20 +1550,29 @@
   }
 
 
-  /* TẢI TIN TỨC */
+  /* =========================
+     TẢI DANH SÁCH TIN
+  ========================= */
 
   function loadNews() {
 
     onValue(
-      ref(db, "posts"),
+      ref(
+        db,
+        "posts"
+      ),
       snapshot => {
 
         const list =
-          document.getElementById("newsList");
+          document
+            .getElementById("newsList");
 
         list.innerHTML = "";
 
-        const data = snapshot.val();
+
+        const data =
+          snapshot.val();
+
 
         if (!data) {
 
@@ -1032,98 +1580,114 @@
             "<p>Chưa có bài viết.</p>";
 
           return;
-
         }
 
 
-        Object.entries(data)
+        Object
+          .entries(data)
           .reverse()
-          .forEach(([id, post]) => {
+          .forEach(
+            ([id, post]) => {
 
-            const div =
-              document.createElement("div");
+              const div =
+                document
+                  .createElement("div");
 
-            div.className = "post";
-
-            let html = `
-
-              <h3>
-                ${escapeHTML(post.title || "")}
-              </h3>
-
-              <p>
-                ${escapeHTML(post.content || "")
-                  .replace(/\n/g, "<br>")}
-              </p>
-
-              <small>
-                ${escapeHTML(post.date || "")}
-              </small>
-
-            `;
+              div.className =
+                "post";
 
 
-            if (post.image) {
+              let html = `
+
+                <h3>
+                  ${escapeHTML(
+                    post.title || ""
+                  )}
+                </h3>
+
+                <p>
+                  ${escapeHTML(
+                    post.content || ""
+                  ).replace(
+                    /\n/g,
+                    "<br>"
+                  )}
+                </p>
+
+                <small>
+                  ${escapeHTML(
+                    post.date || ""
+                  )}
+                </small>
+
+              `;
+
+
+              if (post.image) {
+
+                html += `
+
+                  <br>
+
+                  <img
+                    src="${escapeHTML(
+                      post.image
+                    )}"
+                    alt="Hình ảnh bài viết"
+                  >
+
+                `;
+
+              }
+
 
               html += `
 
                 <br>
 
-                <img
-                  src="${escapeHTML(post.image)}"
-                  alt="Hình ảnh"
+                <button
+                  class="delete"
+                  data-id="${id}"
                 >
+                  🗑️ Xóa bài
+                </button>
 
               `;
 
-            }
+
+              div.innerHTML =
+                html;
 
 
-            html += `
+              div
+                .querySelector(".delete")
+                .addEventListener(
+                  "click",
+                  async () => {
 
-              <br>
-
-              <button
-                class="delete"
-                data-id="${id}"
-              >
-                🗑️ Xóa bài
-              </button>
-
-            `;
-
-
-            div.innerHTML = html;
-
-
-            div
-              .querySelector(".delete")
-              .addEventListener(
-                "click",
-                async () => {
-
-                  if (
-                    confirm(
-                      "Bạn có chắc muốn xóa bài này?"
-                    )
-                  ) {
-
-                    await remove(
-                      ref(
-                        db,
-                        "posts/" + id
+                    if (
+                      confirm(
+                        "Bạn có chắc muốn xóa bài này?"
                       )
-                    );
+                    ) {
+
+                      await remove(
+                        ref(
+                          db,
+                          "posts/" + id
+                        )
+                      );
+
+                    }
 
                   }
-
-                }
-              );
+                );
 
 
-            list.appendChild(div);
+              list.appendChild(div);
 
-          });
+            }
+          );
 
       }
     );
