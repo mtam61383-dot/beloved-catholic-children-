@@ -1,1 +1,19 @@
+<input type="file" id="logoInput" accept="image/*">
 
+<script>
+document.getElementById("logoInput").addEventListener("change", function () {
+    const file = this.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function () {
+        const a = document.createElement("a");
+        a.href = reader.result;
+        a.download = "logo.png";
+        a.click();
+    };
+
+    reader.readAsDataURL(file);
+});
+</script>
