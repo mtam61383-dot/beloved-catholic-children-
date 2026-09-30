@@ -1,1698 +1,1691 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản trị - Beloved Catholic Children</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
+<title>Quản trị - Beloved Catholic Children</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f6f9;
+    color:#222;
+}
+
+header{
+    background:linear-gradient(135deg,#8b0000,#d62828);
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    font-size:25px;
+}
+
+header p{
+    margin:7px 0 0;
+    opacity:.9;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.box{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.login-box{
+    max-width:450px;
+    margin:50px auto;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:12px;
+    margin-top:7px;
+    margin-bottom:14px;
+    border:1px solid #ddd;
+    border-radius:9px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:150px;
+    resize:vertical;
+}
+
+button{
+    border:none;
+    padding:12px 18px;
+    border-radius:9px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.btn{
+    background:#b00020;
+    color:white;
+}
+
+.btn:hover{
+    background:#8b0018;
+}
+
+.btn-secondary{
+    background:#eee;
+    color:#222;
+}
+
+.menu{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.menu button{
+    background:#eee;
+}
+
+.menu button.active{
+    background:#b00020;
+    color:white;
+}
+
+.panel{
+    display:none;
+}
+
+.panel.active{
+    display:block;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-top:10px;
+}
+
+.image-box{
+    border:2px dashed #ccc;
+    padding:15px;
+    border-radius:12px;
+    background:#fafafa;
+    margin-top:8px;
+}
+
+.upload-label{
+    display:block;
+    text-align:center;
+    padding:14px;
+    background:#b00020;
+    color:white;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.upload-label:hover{
+    background:#8b0018;
+}
+
+#previewImage{
+    width:100%;
+    max-height:400px;
+    object-fit:contain;
+    margin-top:10px;
+    border-radius:10px;
+    background:#eee;
+}
+
+#uploadStatus{
+    font-size:14px;
+    margin:8px 0;
+}
+
+.post{
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:15px;
+    background:white;
+}
+
+.post img{
+    width:100%;
+    max-height:300px;
+    object-fit:contain;
+    border-radius:10px;
+    margin-top:10px;
+}
+
+.post h3{
+    margin-top:0;
+}
+
+.post-date{
+    font-size:13px;
+    color:#777;
+    margin-bottom:8px;
+}
+
+.logo-preview{
+    max-width:250px;
+    max-height:200px;
+    object-fit:contain;
+    display:block;
+    margin:10px auto;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.error{
+    color:#c00;
+}
+
+.success{
+    color:green;
+}
+
+.logout{
+    float:right;
+    background:white;
+    color:#b00020;
+}
+
+.clear{
+    clear:both;
+}
+
+@media(max-width:600px){
+
+    .container{
+        padding:10px;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f2f7fc;
-      color: #123;
+    header h1{
+        font-size:21px;
     }
 
-    header {
-      background: #0d6efd;
-      color: white;
-      padding: 25px 20px;
-      text-align: center;
+    .menu button{
+        flex:1 1 45%;
     }
 
-    header h1 {
-      margin: 0;
-    }
+}
 
-    .container {
-      max-width: 1000px;
-      margin: 25px auto;
-      padding: 15px;
-    }
-
-    .box {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
-      margin-bottom: 20px;
-    }
-
-    h2 {
-      color: #0d6efd;
-      margin-top: 0;
-    }
-
-    h3 {
-      color: #0d6efd;
-    }
-
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 13px;
-      margin: 7px 0 15px;
-      border: 1px solid #ccd6e0;
-      border-radius: 8px;
-      font-size: 15px;
-    }
-
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    button {
-      border: 0;
-      border-radius: 8px;
-      padding: 11px 18px;
-      cursor: pointer;
-      font-size: 15px;
-      background: #0d6efd;
-      color: white;
-      margin: 4px;
-    }
-
-    button:hover {
-      opacity: .9;
-    }
-
-    .logout {
-      background: #dc3545;
-      float: right;
-    }
-
-    .delete {
-      background: #dc3545;
-    }
-
-    .edit {
-      background: #198754;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .message {
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .menu button {
-      width: 100%;
-      margin: 0;
-    }
-
-    .panel {
-      display: none;
-    }
-
-    .panel.active {
-      display: block;
-    }
-
-    .post {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 15px;
-    }
-
-    .post img {
-      max-width: 100%;
-      max-height: 450px;
-      object-fit: contain;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-
-    .preview {
-      border: 1px dashed #aaa;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-
-    .image-box {
-      border: 2px dashed #c8d6e5;
-      border-radius: 12px;
-      padding: 18px;
-      background: #f8fbff;
-      margin-bottom: 15px;
-    }
-
-    .image-box-title {
-      font-weight: bold;
-      color: #0d6efd;
-      margin-bottom: 10px;
-    }
-
-    .image-preview {
-      display: none;
-      width: 100%;
-      max-height: 400px;
-      object-fit: contain;
-      border-radius: 10px;
-      margin-top: 15px;
-      background: #eee;
-    }
-
-    .upload-label {
-      display: inline-block;
-      background: #198754;
-      color: white;
-      padding: 11px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 4px 0 12px;
-    }
-
-    .upload-label:hover {
-      opacity: .9;
-    }
-
-    #imageInput {
-      display: none;
-    }
-
-    .upload-status {
-      font-size: 14px;
-      color: #555;
-      margin-top: 5px;
-    }
-
-    .logo-preview {
-      max-width: 180px;
-      max-height: 120px;
-      object-fit: contain;
-      margin: 10px 0;
-    }
-
-    small {
-      color: #666;
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>✝ Beloved Catholic Children</h1>
-  <p>Trang quản trị website</p>
-</header>
-
-<div class="container">
-
-  <!-- ĐĂNG NHẬP -->
-  <div class="box" id="loginBox">
-
-    <h2>🔐 Đăng nhập quản trị</h2>
-
-    <input
-      type="email"
-      id="email"
-      placeholder="Email quản trị"
-    >
-
-    <input
-      type="password"
-      id="password"
-      placeholder="Mật khẩu"
-    >
-
-    <button id="loginBtn">
-      Đăng nhập
+    <button id="logoutBtn" class="logout hidden">
+        Đăng xuất
     </button>
 
-    <div class="message" id="loginMessage"></div>
+    <h1>Beloved Catholic Children</h1>
+    <p>Trang quản trị</p>
 
-  </div>
-
-
-  <!-- QUẢN TRỊ -->
-  <div id="adminArea" class="hidden">
-
-    <div class="box">
-
-      <button class="logout" id="logoutBtn">
-        Đăng xuất
-      </button>
-
-      <h2>⚙️ Quản lý website</h2>
-
-      <div class="menu">
-
-        <button onclick="showPanel('homePanel')">
-          🏠 Trang chủ
-        </button>
-
-        <button onclick="showPanel('aboutPanel')">
-          ℹ️ Giới thiệu
-        </button>
-
-        <button onclick="showPanel('newsPanel')">
-          📰 Tin tức
-        </button>
-
-        <button onclick="showPanel('activityPanel')">
-          📅 Sinh hoạt
-        </button>
-
-        <button onclick="showPanel('musicPanel')">
-          🎵 Thánh nhạc
-        </button>
-
-        <button onclick="showPanel('contactPanel')">
-          📞 Liên hệ
-        </button>
-
-        <button onclick="showPanel('logoPanel')">
-          🖼️ Logo
-        </button>
-
-      </div>
-
-    </div>
+    <div class="clear"></div>
+</header>
 
 
-    <!-- TRANG CHỦ -->
-    <div class="box panel" id="homePanel">
+<!-- ========================= -->
+<!-- ĐĂNG NHẬP -->
+<!-- ========================= -->
 
-      <h2>🏠 Quản lý Trang chủ</h2>
+<div id="loginArea" class="container">
 
-      <label>Tiêu đề nhỏ</label>
+    <div class="box login-box">
 
-      <input
-        id="homeSmall"
-        placeholder="HỘI BELOVED CATHOLIC CHILDREN"
-      >
+        <h2>🔐 Đăng nhập quản trị</h2>
 
-      <label>Tiêu đề chính</label>
-
-      <input
-        id="homeTitle"
-        placeholder="Yêu mến Chúa"
-      >
-
-      <label>Dòng phụ</label>
-
-      <input
-        id="homeSubtitle"
-        placeholder="Sống Đức Tin – Phục vụ"
-      >
-
-      <label>Mô tả</label>
-
-      <textarea
-        id="homeDescription"
-        placeholder="Cùng nhau bước đi trong tình yêu Đức Kitô."
-      ></textarea>
-
-      <button id="saveHome">
-        💾 Lưu Trang chủ
-      </button>
-
-      <div class="message" id="homeMessage"></div>
-
-    </div>
-
-
-    <!-- GIỚI THIỆU -->
-    <div class="box panel" id="aboutPanel">
-
-      <h2>ℹ️ Quản lý Giới thiệu</h2>
-
-      <label>Tên Hội</label>
-
-      <input
-        id="aboutTitle"
-        placeholder="Beloved Catholic Children"
-      >
-
-      <label>Nội dung giới thiệu</label>
-
-      <textarea
-        id="aboutContent"
-        placeholder="Giới thiệu về Hội..."
-      ></textarea>
-
-      <label>Câu chủ đề</label>
-
-      <input
-        id="aboutQuote"
-        placeholder="Yêu mến đơn sơ thánh hóa."
-      >
-
-      <button id="saveAbout">
-        💾 Lưu Giới thiệu
-      </button>
-
-      <div class="message" id="aboutMessage"></div>
-
-    </div>
-
-
-    <!-- TIN TỨC -->
-    <div class="box panel" id="newsPanel">
-
-      <h2>📰 Quản lý Tin tức</h2>
-
-      <label>Tiêu đề</label>
-
-      <input
-        id="newsTitle"
-        placeholder="Tiêu đề bài viết"
-      >
-
-      <label>Nội dung</label>
-
-      <textarea
-        id="newsContent"
-        placeholder="Nội dung bài viết..."
-      ></textarea>
-
-
-      <!-- HÌNH ẢNH -->
-      <div class="image-box">
-
-        <div class="image-box-title">
-          🖼️ Hình ảnh bài viết
-        </div>
-
-        <small>
-          Bạn có thể dán link ảnh hoặc tải ảnh trực tiếp từ điện thoại.
-        </small>
-
-        <label for="imageInput" class="upload-label">
-          📁 Tải ảnh lên
-        </label>
-
+        <label>Email</label>
         <input
-          type="file"
-          id="imageInput"
-          accept="image/*"
+            type="email"
+            id="email"
+            placeholder="Nhập email"
         >
 
+        <label>Mật khẩu</label>
         <input
-          type="url"
-          id="newsImage"
-          placeholder="🔗 Hoặc dán link ảnh vào đây..."
+            type="password"
+            id="password"
+            placeholder="Nhập mật khẩu"
         >
 
-        <div
-          id="uploadStatus"
-          class="upload-status"
-        ></div>
-
-        <img
-          id="previewImage"
-          class="image-preview"
-          alt="Xem trước ảnh"
+        <button
+            id="loginBtn"
+            class="btn"
+            style="width:100%;"
         >
+            Đăng nhập
+        </button>
 
-      </div>
-
-
-      <button id="addNews">
-        ➕ Đăng bài
-      </button>
-
-      <div class="message" id="newsMessage"></div>
-
-      <h3>Các bài đã đăng</h3>
-
-      <div id="newsList">
-        Đang tải...
-      </div>
+        <p id="loginMessage"></p>
 
     </div>
-
-
-    <!-- SINH HOẠT -->
-    <div class="box panel" id="activityPanel">
-
-      <h2>📅 Quản lý Sinh hoạt</h2>
-
-      <label>Chủ đề</label>
-
-      <input
-        id="activityTitle"
-        placeholder="Sống Đức Tin Trong Thời Đại Số"
-      >
-
-      <label>Thời gian</label>
-
-      <input
-        id="activityTime"
-        placeholder="18:00"
-      >
-
-      <label>Địa điểm</label>
-
-      <input
-        id="activityPlace"
-        placeholder="Biên Hòa"
-      >
-
-      <label>Nội dung</label>
-
-      <textarea
-        id="activityContent"
-        placeholder="Nội dung sinh hoạt..."
-      ></textarea>
-
-      <button id="saveActivity">
-        💾 Lưu Sinh hoạt
-      </button>
-
-      <div class="message" id="activityMessage"></div>
-
-    </div>
-
-
-    <!-- THÁNH NHẠC -->
-    <div class="box panel" id="musicPanel">
-
-      <h2>🎵 Quản lý Thánh nhạc</h2>
-
-      <label>Tiêu đề</label>
-
-      <input
-        id="musicTitle"
-        placeholder="Âm nhạc Công giáo"
-      >
-
-      <label>Nội dung</label>
-
-      <textarea
-        id="musicContent"
-        placeholder="Nội dung về thánh nhạc..."
-      ></textarea>
-
-      <button id="saveMusic">
-        💾 Lưu Thánh nhạc
-      </button>
-
-      <div class="message" id="musicMessage"></div>
-
-    </div>
-
-
-    <!-- LIÊN HỆ -->
-    <div class="box panel" id="contactPanel">
-
-      <h2>📞 Quản lý Liên hệ</h2>
-
-      <label>Facebook</label>
-
-      <input
-        id="facebook"
-        placeholder="Link Facebook"
-      >
-
-      <label>TikTok</label>
-
-      <input
-        id="tiktok"
-        placeholder="Link TikTok"
-      >
-
-      <label>Nội dung liên hệ</label>
-
-      <textarea
-        id="contactContent"
-        placeholder="Theo dõi Beloved Catholic Children..."
-      ></textarea>
-
-      <button id="saveContact">
-        💾 Lưu Liên hệ
-      </button>
-
-      <div class="message" id="contactMessage"></div>
-
-    </div>
-
-
-    <!-- LOGO -->
-    <div class="box panel" id="logoPanel">
-
-      <h2>🖼️ Quản lý Logo</h2>
-
-      <p>
-        Logo phải được tải lên GitHub trước.
-      </p>
-
-      <label>Tên file logo</label>
-
-      <input
-        id="logoFile"
-        value="logo.png"
-        placeholder="logo.png"
-      >
-
-      <div class="preview">
-
-        <p>Xem trước:</p>
-
-        <img
-          id="logoPreview"
-          class="logo-preview"
-          src="logo.png"
-          alt="Logo"
-        >
-
-      </div>
-
-      <button id="saveLogo">
-        💾 Lưu Logo
-      </button>
-
-      <div class="message" id="logoMessage"></div>
-
-    </div>
-
-  </div>
 
 </div>
 
 
+<!-- ========================= -->
+<!-- ADMIN -->
+<!-- ========================= -->
+
+<div id="adminArea" class="container hidden">
+
+    <div class="menu">
+
+        <button class="active" data-panel="home">
+            🏠 Trang chủ
+        </button>
+
+        <button data-panel="about">
+            ℹ️ Giới thiệu
+        </button>
+
+        <button data-panel="news">
+            📰 Tin tức
+        </button>
+
+        <button data-panel="activity">
+            📅 Hoạt động
+        </button>
+
+        <button data-panel="music">
+            🎵 Thánh nhạc
+        </button>
+
+        <button data-panel="contact">
+            📞 Liên hệ
+        </button>
+
+        <button data-panel="logo">
+            🖼️ Logo
+        </button>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- HOME -->
+    <!-- ========================= -->
+
+    <div id="home" class="panel active">
+
+        <div class="box">
+
+            <h2>🏠 Quản lý Trang chủ</h2>
+
+            <label>Tiêu đề</label>
+
+            <input
+                id="homeTitle"
+                placeholder="Tiêu đề trang chủ"
+            >
+
+            <label>Nội dung</label>
+
+            <textarea
+                id="homeContent"
+                placeholder="Nội dung trang chủ"
+            ></textarea>
+
+            <button
+                class="btn"
+                id="saveHome"
+            >
+                💾 Lưu trang chủ
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- ABOUT -->
+    <!-- ========================= -->
+
+    <div id="about" class="panel">
+
+        <div class="box">
+
+            <h2>ℹ️ Giới thiệu về Hội</h2>
+
+            <label>Nội dung giới thiệu</label>
+
+            <textarea
+                id="aboutContent"
+                placeholder="Giới thiệu về Beloved Catholic Children..."
+            ></textarea>
+
+            <button
+                class="btn"
+                id="saveAbout"
+            >
+                💾 Lưu giới thiệu
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- NEWS -->
+    <!-- ========================= -->
+
+    <div id="news" class="panel">
+
+        <div class="box">
+
+            <h2>📰 Đăng bài viết</h2>
+
+            <label>Tiêu đề bài viết</label>
+
+            <input
+                type="text"
+                id="newsTitle"
+                placeholder="Nhập tiêu đề..."
+            >
+
+            <label>Nội dung</label>
+
+            <textarea
+                id="newsContent"
+                placeholder="Nhập nội dung bài viết..."
+            ></textarea>
+
+
+            <!-- ========================= -->
+            <!-- HÌNH ẢNH -->
+            <!-- ========================= -->
+
+            <label>Hình ảnh bài viết</label>
+
+            <div class="image-box">
+
+                <label
+                    for="imageInput"
+                    class="upload-label"
+                >
+                    📁 Chọn ảnh từ điện thoại
+                </label>
+
+                <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                    style="display:none;"
+                >
+
+                <input
+                    type="text"
+                    id="newsImage"
+                    placeholder="🔗 Hoặc dán link ảnh vào đây..."
+                >
+
+                <div id="uploadStatus"></div>
+
+                <img
+                    id="previewImage"
+                    style="display:none;"
+                >
+
+            </div>
+
+
+            <button
+                class="btn"
+                id="addNews"
+                style="margin-top:15px;"
+            >
+                📰 Đăng bài
+            </button>
+
+        </div>
+
+
+        <!-- DANH SÁCH BÀI VIẾT -->
+
+        <div class="box">
+
+            <h2>📋 Các bài đã đăng</h2>
+
+            <div id="newsList">
+                Đang tải...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- ACTIVITY -->
+    <!-- ========================= -->
+
+    <div id="activity" class="panel">
+
+        <div class="box">
+
+            <h2>📅 Hoạt động</h2>
+
+            <label>Tiêu đề</label>
+
+            <input
+                id="activityTitle"
+                placeholder="Tên hoạt động"
+            >
+
+            <label>Nội dung</label>
+
+            <textarea
+                id="activityContent"
+                placeholder="Thông tin hoạt động..."
+            ></textarea>
+
+            <button
+                class="btn"
+                id="saveActivity"
+            >
+                💾 Lưu hoạt động
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- MUSIC -->
+    <!-- ========================= -->
+
+    <div id="music" class="panel">
+
+        <div class="box">
+
+            <h2>🎵 Thánh nhạc</h2>
+
+            <label>Tiêu đề</label>
+
+            <input
+                id="musicTitle"
+                placeholder="Tên bài hát / chủ đề"
+            >
+
+            <label>Nội dung</label>
+
+            <textarea
+                id="musicContent"
+                placeholder="Thông tin thánh nhạc..."
+            ></textarea>
+
+            <button
+                class="btn"
+                id="saveMusic"
+            >
+                💾 Lưu thánh nhạc
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- CONTACT -->
+    <!-- ========================= -->
+
+    <div id="contact" class="panel">
+
+        <div class="box">
+
+            <h2>📞 Liên hệ</h2>
+
+            <label>Nội dung liên hệ</label>
+
+            <textarea
+                id="contactContent"
+                placeholder="Thông tin liên hệ..."
+            ></textarea>
+
+            <button
+                class="btn"
+                id="saveContact"
+            >
+                💾 Lưu liên hệ
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- LOGO -->
+    <!-- ========================= -->
+
+    <div id="logo" class="panel">
+
+        <div class="box">
+
+            <h2>🖼️ Logo Hội</h2>
+
+            <label>Link logo</label>
+
+            <input
+                id="logoUrl"
+                placeholder="Dán link logo..."
+            >
+
+            <img
+                id="logoPreview"
+                class="logo-preview"
+                style="display:none;"
+            >
+
+            <button
+                class="btn"
+                id="saveLogo"
+            >
+                💾 Lưu logo
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- FIREBASE -->
+<!-- ========================= -->
+
 <script type="module">
 
-  /* =========================
-     FIREBASE
-  ========================= */
-
-  import {
+import {
     initializeApp
-  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
-  import {
+import {
     getAuth,
     signInWithEmailAndPassword,
     onAuthStateChanged,
     signOut
-  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-  import {
+import {
     getDatabase,
     ref,
-    push,
     set,
-    onValue,
-    remove
-  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
-
-  import {
-    getStorage,
-    storageRef,
-    uploadBytes,
-    getDownloadURL
-  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
+    push,
+    remove,
+    onValue
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 
 
-  /* =========================
-     FIREBASE CONFIG
-  ========================= */
+// ===============================
+// FIREBASE CONFIG
+// ===============================
 
-  const firebaseConfig = {
+const firebaseConfig = {
 
     apiKey:
-      "AIzaSyA_b4h2_RP7vSMvM8eMxplFr7WSR2flzdg",
+        "AIzaSyA_b4h2_RP7vSMvM8eMxplFr7WSR2flzdg",
 
     authDomain:
-      "beloved-catholic-children.firebaseapp.com",
+        "beloved-catholic-children.firebaseapp.com",
 
     projectId:
-      "beloved-catholic-children",
+        "beloved-catholic-children",
 
     storageBucket:
-      "beloved-catholic-children.firebasestorage.app",
+        "beloved-catholic-children.firebasestorage.app",
 
     messagingSenderId:
-      "657011413453",
+        "657011413453",
 
     appId:
-      "1:657011413453:web:02fbdbd6ec8f5b04157484",
+        "1:657011413453:web:02fbdbd6ec8f5b04157484",
 
     measurementId:
-      "G-VTL7T0S9EY"
-
-  };
-
-
-  const app =
-    initializeApp(firebaseConfig);
-
-  const auth =
-    getAuth(app);
-
-  const db =
-    getDatabase(app);
-
-  const storage =
-    getStorage(app);
+        "G-VTL7T0S9EY"
+};
 
 
-  /* =========================
-     ELEMENTS
-  ========================= */
+// ===============================
+// INIT
+// ===============================
 
-  const loginBox =
-    document.getElementById("loginBox");
+const app = initializeApp(firebaseConfig);
 
-  const adminArea =
+const auth = getAuth(app);
+
+const db = getDatabase(app);
+
+
+// ===============================
+// ELEMENTS
+// ===============================
+
+const loginArea =
+    document.getElementById("loginArea");
+
+const adminArea =
     document.getElementById("adminArea");
 
-  const loginMessage =
+const loginMessage =
     document.getElementById("loginMessage");
 
-  const imageInput =
-    document.getElementById("imageInput");
-
-  const newsImage =
-    document.getElementById("newsImage");
-
-  const previewImage =
-    document.getElementById("previewImage");
-
-  const uploadStatus =
-    document.getElementById("uploadStatus");
+const logoutBtn =
+    document.getElementById("logoutBtn");
 
 
-  let uploadedImageURL = "";
+// ===============================
+// LOGIN
+// ===============================
 
+document
+.getElementById("loginBtn")
+.addEventListener("click", async () => {
 
-  /* =========================
-     ĐĂNG NHẬP
-  ========================= */
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
 
-  document
-    .getElementById("loginBtn")
-    .addEventListener("click", async () => {
+    const password =
+        document.getElementById("password")
+        .value;
 
-      const email =
-        document
-          .getElementById("email")
-          .value
-          .trim();
+    if (!email || !password) {
 
-      const password =
-        document
-          .getElementById("password")
-          .value;
-
-      if (!email || !password) {
-
-        loginMessage.textContent =
-          "Vui lòng nhập email và mật khẩu.";
+        loginMessage.innerHTML =
+            '<span class="error">Vui lòng nhập email và mật khẩu.</span>';
 
         return;
-      }
+    }
 
-      try {
+    try {
 
         await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
+            auth,
+            email,
+            password
         );
 
-        loginMessage.textContent = "";
+        loginMessage.innerHTML =
+            '<span class="success">Đăng nhập thành công!</span>';
 
-      } catch (error) {
+    } catch(error) {
 
-        loginMessage.textContent =
-          "Đăng nhập thất bại.";
+        loginMessage.innerHTML =
+            '<span class="error">Đăng nhập thất bại: ' +
+            error.message +
+            '</span>';
 
-      }
+    }
 
-    });
+});
 
 
-  /* =========================
-     KIỂM TRA ĐĂNG NHẬP
-  ========================= */
+// ===============================
+// AUTH STATE
+// ===============================
 
-  onAuthStateChanged(
-    auth,
-    user => {
+onAuthStateChanged(auth, user => {
 
-      if (user) {
+    if(user){
 
-        loginBox
-          .classList
-          .add("hidden");
+        loginArea.classList.add("hidden");
 
-        adminArea
-          .classList
-          .remove("hidden");
+        adminArea.classList.remove("hidden");
+
+        logoutBtn.classList.remove("hidden");
 
         loadAll();
 
-      } else {
+    }else{
 
-        loginBox
-          .classList
-          .remove("hidden");
+        loginArea.classList.remove("hidden");
 
-        adminArea
-          .classList
-          .add("hidden");
+        adminArea.classList.add("hidden");
 
-      }
+        logoutBtn.classList.add("hidden");
 
     }
-  );
+
+});
 
 
-  /* =========================
-     ĐĂNG XUẤT
-  ========================= */
+// ===============================
+// LOGOUT
+// ===============================
 
-  document
-    .getElementById("logoutBtn")
-    .addEventListener(
-      "click",
-      async () => {
+logoutBtn.addEventListener("click", async () => {
 
-        await signOut(auth);
+    await signOut(auth);
 
-      }
-    );
+});
 
 
-  /* =========================
-     CHUYỂN PANEL
-  ========================= */
+// ===============================
+// MENU
+// ===============================
 
-  window.showPanel = function(id) {
+document
+.querySelectorAll(".menu button")
+.forEach(button => {
 
-    document
-      .querySelectorAll(".panel")
-      .forEach(panel => {
+    button.addEventListener("click", () => {
 
-        panel
-          .classList
-          .remove("active");
+        document
+        .querySelectorAll(".menu button")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
 
-      });
+        document
+        .querySelectorAll(".panel")
+        .forEach(panel =>
+            panel.classList.remove("active")
+        );
 
-    document
-      .getElementById(id)
-      .classList
-      .add("active");
+        button.classList.add("active");
 
-  };
+        document
+        .getElementById(button.dataset.panel)
+        .classList.add("active");
 
+    });
 
-  /* =========================
-     ESCAPE HTML
-  ========================= */
-
-  function escapeHTML(text) {
-
-    return String(text)
-
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-
-      .replace(
-        /</g,
-        "&lt;"
-      )
-
-      .replace(
-        />/g,
-        "&gt;"
-      )
-
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-
-      .replace(
-        /'/g,
-        "&#039;"
-      );
-
-  }
+});
 
 
-  /* =========================
-     XEM TRƯỚC LINK ẢNH
-  ========================= */
+// ===============================
+// ẢNH
+// ===============================
 
-  newsImage
-    .addEventListener(
-      "input",
-      () => {
+let selectedImageData = "";
 
-        const url =
-          newsImage.value.trim();
+const imageInput =
+    document.getElementById("imageInput");
 
-        if (url) {
+const newsImage =
+    document.getElementById("newsImage");
 
-          uploadedImageURL = "";
+const previewImage =
+    document.getElementById("previewImage");
 
-          previewImage.src = url;
-
-          previewImage.style.display =
-            "block";
-
-          uploadStatus.textContent =
-            "🔗 Đang sử dụng link ảnh.";
-
-        } else {
-
-          previewImage.style.display =
-            "none";
-
-          uploadStatus.textContent = "";
-
-        }
-
-      }
-    );
+const uploadStatus =
+    document.getElementById("uploadStatus");
 
 
-  /* =========================
-     TẢI ẢNH LÊN FIREBASE
-  ========================= */
+// ===============================
+// CHỌN ẢNH TỪ MÁY
+// ===============================
 
-  imageInput
-    .addEventListener(
-      "change",
-      async () => {
+imageInput.addEventListener(
+"change",
+function(){
 
-        const file =
-          imageInput.files[0];
+    const file = this.files[0];
 
-        if (!file) {
-          return;
-        }
-
-        if (!file.type.startsWith("image/")) {
-
-          uploadStatus.textContent =
-            "❌ Vui lòng chọn file hình ảnh.";
-
-          imageInput.value = "";
-
-          return;
-        }
+    if(!file) return;
 
 
-        uploadStatus.textContent =
-          "⏳ Đang tải ảnh lên...";
+    if(!file.type.startsWith("image/")){
+
+        alert("Vui lòng chọn file hình ảnh!");
+
+        this.value = "";
+
+        return;
+    }
+
+
+    /*
+      Giới hạn 1.5MB
+      để tránh bài viết quá lớn
+    */
+
+    if(file.size > 1.5 * 1024 * 1024){
+
+        alert(
+            "Ảnh quá lớn! Hãy chọn ảnh dưới 1.5MB."
+        );
+
+        this.value = "";
+
+        return;
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload =
+    function(e){
+
+        selectedImageData =
+            e.target.result;
+
+        previewImage.src =
+            selectedImageData;
 
         previewImage.style.display =
-          "none";
-
-
-        try {
-
-          const user =
-            auth.currentUser;
-
-          if (!user) {
-
-            uploadStatus.textContent =
-              "❌ Bạn chưa đăng nhập.";
-
-            return;
-          }
-
-
-          const safeName =
-            file.name
-              .replace(
-                /[^a-zA-Z0-9._-]/g,
-                "_"
-              );
-
-
-          const fileName =
-            Date.now() +
-            "_" +
-            safeName;
-
-
-          const imageRef =
-            storageRef(
-              storage,
-              "news-images/" +
-              user.uid +
-              "/" +
-              fileName
-            );
-
-
-          await uploadBytes(
-            imageRef,
-            file
-          );
-
-
-          const downloadURL =
-            await getDownloadURL(
-              imageRef
-            );
-
-
-          uploadedImageURL =
-            downloadURL;
-
-
-          newsImage.value =
-            downloadURL;
-
-
-          previewImage.src =
-            downloadURL;
-
-          previewImage.style.display =
             "block";
 
-
-          uploadStatus.textContent =
-            "✅ Tải ảnh thành công!";
-
-        } catch (error) {
-
-          console.error(error);
-
-          uploadStatus.textContent =
-            "❌ Không thể tải ảnh. Kiểm tra Firebase Storage.";
-
-        }
-
-      }
-    );
-
-
-  /* =========================
-     TRANG CHỦ
-  ========================= */
-
-  document
-    .getElementById("saveHome")
-    .addEventListener(
-      "click",
-      async () => {
-
-        const data = {
-
-          small:
-            document
-              .getElementById("homeSmall")
-              .value,
-
-          title:
-            document
-              .getElementById("homeTitle")
-              .value,
-
-          subtitle:
-            document
-              .getElementById("homeSubtitle")
-              .value,
-
-          description:
-            document
-              .getElementById("homeDescription")
-              .value
-
-        };
-
-
-        await set(
-          ref(
-            db,
-            "siteContent/home"
-          ),
-          data
-        );
-
-
-        document
-          .getElementById("homeMessage")
-          .textContent =
-          "✅ Đã lưu Trang chủ.";
-
-      }
-    );
-
-
-  /* =========================
-     GIỚI THIỆU
-  ========================= */
-
-  document
-    .getElementById("saveAbout")
-    .addEventListener(
-      "click",
-      async () => {
-
-        const data = {
-
-          title:
-            document
-              .getElementById("aboutTitle")
-              .value,
-
-          content:
-            document
-              .getElementById("aboutContent")
-              .value,
-
-          quote:
-            document
-              .getElementById("aboutQuote")
-              .value
-
-        };
-
-
-        await set(
-          ref(
-            db,
-            "siteContent/about"
-          ),
-          data
-        );
-
-
-        document
-          .getElementById("aboutMessage")
-          .textContent =
-          "✅ Đã lưu Giới thiệu.";
-
-      }
-    );
-
-
-  /* =========================
-     ĐĂNG TIN TỨC
-  ========================= */
-
-  document
-    .getElementById("addNews")
-    .addEventListener(
-      "click",
-      async () => {
-
-        const title =
-          document
-            .getElementById("newsTitle")
-            .value
-            .trim();
-
-        const content =
-          document
-            .getElementById("newsContent")
-            .value
-            .trim();
-
-        const image =
-          newsImage
-            .value
-            .trim();
-
-
-        if (!title || !content) {
-
-          document
-            .getElementById("newsMessage")
-            .textContent =
-            "Vui lòng nhập tiêu đề và nội dung.";
-
-          return;
-        }
-
-
-        document
-          .getElementById("newsMessage")
-          .textContent =
-          "⏳ Đang đăng bài...";
-
-
-        try {
-
-          await push(
-            ref(
-              db,
-              "posts"
-            ),
-            {
-
-              title:
-                title,
-
-              content:
-                content,
-
-              image:
-                image,
-
-              date:
-                new Date()
-                  .toLocaleString(
-                    "vi-VN"
-                  )
-
-            }
-          );
-
-
-          document
-            .getElementById("newsTitle")
-            .value = "";
-
-          document
-            .getElementById("newsContent")
-            .value = "";
-
-          newsImage.value = "";
-
-          imageInput.value = "";
-
-          uploadedImageURL = "";
-
-          previewImage.src = "";
-
-          previewImage.style.display =
-            "none";
-
-          uploadStatus.textContent =
+        newsImage.value =
             "";
 
+        uploadStatus.innerHTML =
+            '<span class="success">✅ Đã chọn ảnh</span>';
 
-          document
-            .getElementById("newsMessage")
-            .textContent =
-            "✅ Đã đăng bài thành công.";
+    };
 
-        } catch (error) {
 
-          console.error(error);
+    reader.readAsDataURL(file);
 
-          document
-            .getElementById("newsMessage")
-            .textContent =
-            "❌ Không thể đăng bài.";
+});
+
+
+// ===============================
+// DÁN LINK ẢNH
+// ===============================
+
+newsImage.addEventListener(
+"input",
+function(){
+
+    const url =
+        this.value.trim();
+
+
+    if(!url){
+
+        if(!selectedImageData){
+
+            previewImage.style.display =
+                "none";
 
         }
 
-      }
-    );
+        return;
+    }
 
 
-  /* =========================
-     SINH HOẠT
-  ========================= */
-
-  document
-    .getElementById("saveActivity")
-    .addEventListener(
-      "click",
-      async () => {
-
-        const data = {
-
-          title:
-            document
-              .getElementById("activityTitle")
-              .value,
-
-          time:
-            document
-              .getElementById("activityTime")
-              .value,
-
-          place:
-            document
-              .getElementById("activityPlace")
-              .value,
-
-          content:
-            document
-              .getElementById("activityContent")
-              .value
-
-        };
+    selectedImageData = "";
 
 
-        await set(
-          ref(
-            db,
-            "siteContent/activity"
-          ),
-          data
+    previewImage.src = url;
+
+    previewImage.style.display =
+        "block";
+
+
+    previewImage.onload =
+    function(){
+
+        uploadStatus.innerHTML =
+            '<span class="success">✅ Link ảnh hợp lệ</span>';
+
+    };
+
+
+    previewImage.onerror =
+    function(){
+
+        uploadStatus.innerHTML =
+            '<span class="error">❌ Không thể tải ảnh từ link này</span>';
+
+    };
+
+});
+
+
+// ===============================
+// ĐĂNG BÀI
+// ===============================
+
+document
+.getElementById("addNews")
+.addEventListener("click", async () => {
+
+    const title =
+        document
+        .getElementById("newsTitle")
+        .value
+        .trim();
+
+    const content =
+        document
+        .getElementById("newsContent")
+        .value
+        .trim();
+
+    const image =
+        selectedImageData ||
+        document
+        .getElementById("newsImage")
+        .value
+        .trim();
+
+
+    if(!title){
+
+        alert("Vui lòng nhập tiêu đề!");
+
+        return;
+    }
+
+
+    if(!content){
+
+        alert("Vui lòng nhập nội dung!");
+
+        return;
+    }
+
+
+    try{
+
+        const postRef =
+            push(ref(db,"posts"));
+
+
+        await set(postRef, {
+
+            title: title,
+
+            content: content,
+
+            image: image,
+
+            date:
+                new Date()
+                .toISOString()
+
+        });
+
+
+        alert("✅ Đăng bài thành công!");
+
+
+        // RESET
+
+        document
+        .getElementById("newsTitle")
+        .value = "";
+
+        document
+        .getElementById("newsContent")
+        .value = "";
+
+        document
+        .getElementById("newsImage")
+        .value = "";
+
+        document
+        .getElementById("imageInput")
+        .value = "";
+
+        selectedImageData = "";
+
+        previewImage.src = "";
+
+        previewImage.style.display =
+            "none";
+
+        uploadStatus.innerHTML = "";
+
+
+    }catch(error){
+
+        alert(
+            "❌ Không thể đăng bài: " +
+            error.message
         );
 
+    }
 
-        document
-          .getElementById("activityMessage")
-          .textContent =
-          "✅ Đã lưu Sinh hoạt.";
+});
 
-      }
-    );
 
+// ===============================
+// LOAD ALL
+// ===============================
 
-  /* =========================
-     THÁNH NHẠC
-  ========================= */
+function loadAll(){
 
-  document
-    .getElementById("saveMusic")
-    .addEventListener(
-      "click",
-      async () => {
+    loadHome();
 
-        const data = {
-
-          title:
-            document
-              .getElementById("musicTitle")
-              .value,
-
-          content:
-            document
-              .getElementById("musicContent")
-              .value
-
-        };
-
-
-        await set(
-          ref(
-            db,
-            "siteContent/music"
-          ),
-          data
-        );
-
-
-        document
-          .getElementById("musicMessage")
-          .textContent =
-          "✅ Đã lưu Thánh nhạc.";
-
-      }
-    );
-
-
-  /* =========================
-     LIÊN HỆ
-  ========================= */
-
-  document
-    .getElementById("saveContact")
-    .addEventListener(
-      "click",
-      async () => {
-
-        const data = {
-
-          facebook:
-            document
-              .getElementById("facebook")
-              .value,
-
-          tiktok:
-            document
-              .getElementById("tiktok")
-              .value,
-
-          content:
-            document
-              .getElementById("contactContent")
-              .value
-
-        };
-
-
-        await set(
-          ref(
-            db,
-            "siteContent/contact"
-          ),
-          data
-        );
-
-
-        document
-          .getElementById("contactMessage")
-          .textContent =
-          "✅ Đã lưu Liên hệ.";
-
-      }
-    );
-
-
-  /* =========================
-     LOGO
-  ========================= */
-
-  document
-    .getElementById("saveLogo")
-    .addEventListener(
-      "click",
-      async () => {
-
-        const logo =
-          document
-            .getElementById("logoFile")
-            .value
-            .trim();
-
-
-        await set(
-          ref(
-            db,
-            "siteContent/logo"
-          ),
-          {
-            file: logo
-          }
-        );
-
-
-        document
-          .getElementById("logoMessage")
-          .textContent =
-          "✅ Đã lưu Logo.";
-
-      }
-    );
-
-
-  /* =========================
-     TẢI DỮ LIỆU
-  ========================= */
-
-  function loadAll() {
-
-    onValue(
-      ref(
-        db,
-        "siteContent"
-      ),
-      snapshot => {
-
-        const data =
-          snapshot.val() || {};
-
-
-        /* TRANG CHỦ */
-
-        const home =
-          data.home || {};
-
-        document
-          .getElementById("homeSmall")
-          .value =
-          home.small || "";
-
-        document
-          .getElementById("homeTitle")
-          .value =
-          home.title || "";
-
-        document
-          .getElementById("homeSubtitle")
-          .value =
-          home.subtitle || "";
-
-        document
-          .getElementById("homeDescription")
-          .value =
-          home.description || "";
-
-
-        /* GIỚI THIỆU */
-
-        const about =
-          data.about || {};
-
-        document
-          .getElementById("aboutTitle")
-          .value =
-          about.title || "";
-
-        document
-          .getElementById("aboutContent")
-          .value =
-          about.content || "";
-
-        document
-          .getElementById("aboutQuote")
-          .value =
-          about.quote || "";
-
-
-        /* SINH HOẠT */
-
-        const activity =
-          data.activity || {};
-
-        document
-          .getElementById("activityTitle")
-          .value =
-          activity.title || "";
-
-        document
-          .getElementById("activityTime")
-          .value =
-          activity.time || "";
-
-        document
-          .getElementById("activityPlace")
-          .value =
-          activity.place || "";
-
-        document
-          .getElementById("activityContent")
-          .value =
-          activity.content || "";
-
-
-        /* THÁNH NHẠC */
-
-        const music =
-          data.music || {};
-
-        document
-          .getElementById("musicTitle")
-          .value =
-          music.title || "";
-
-        document
-          .getElementById("musicContent")
-          .value =
-          music.content || "";
-
-
-        /* LIÊN HỆ */
-
-        const contact =
-          data.contact || {};
-
-        document
-          .getElementById("facebook")
-          .value =
-          contact.facebook || "";
-
-        document
-          .getElementById("tiktok")
-          .value =
-          contact.tiktok || "";
-
-        document
-          .getElementById("contactContent")
-          .value =
-          contact.content || "";
-
-
-        /* LOGO */
-
-        const logo =
-          data.logo || {};
-
-        document
-          .getElementById("logoFile")
-          .value =
-          logo.file || "logo.png";
-
-      }
-    );
-
+    loadAbout();
 
     loadNews();
 
-  }
+    loadActivity();
+
+    loadMusic();
+
+    loadContact();
+
+    loadLogo();
+
+}
 
 
-  /* =========================
-     TẢI DANH SÁCH TIN
-  ========================= */
+// ===============================
+// HOME
+// ===============================
 
-  function loadNews() {
+function loadHome(){
 
     onValue(
-      ref(
-        db,
-        "posts"
-      ),
-      snapshot => {
+        ref(db,"siteContent/home"),
+        snapshot => {
 
-        const list =
-          document
-            .getElementById("newsList");
+            const data =
+                snapshot.val();
 
-        list.innerHTML = "";
+            if(!data) return;
 
+            document
+            .getElementById("homeTitle")
+            .value =
+                data.title || "";
 
-        const data =
-          snapshot.val();
+            document
+            .getElementById("homeContent")
+            .value =
+                data.content || "";
 
-
-        if (!data) {
-
-          list.innerHTML =
-            "<p>Chưa có bài viết.</p>";
-
-          return;
         }
-
-
-        Object
-          .entries(data)
-          .reverse()
-          .forEach(
-            ([id, post]) => {
-
-              const div =
-                document
-                  .createElement("div");
-
-              div.className =
-                "post";
-
-
-              let html = `
-
-                <h3>
-                  ${escapeHTML(
-                    post.title || ""
-                  )}
-                </h3>
-
-                <p>
-                  ${escapeHTML(
-                    post.content || ""
-                  ).replace(
-                    /\n/g,
-                    "<br>"
-                  )}
-                </p>
-
-                <small>
-                  ${escapeHTML(
-                    post.date || ""
-                  )}
-                </small>
-
-              `;
-
-
-              if (post.image) {
-
-                html += `
-
-                  <br>
-
-                  <img
-                    src="${escapeHTML(
-                      post.image
-                    )}"
-                    alt="Hình ảnh bài viết"
-                  >
-
-                `;
-
-              }
-
-
-              html += `
-
-                <br>
-
-                <button
-                  class="delete"
-                  data-id="${id}"
-                >
-                  🗑️ Xóa bài
-                </button>
-
-              `;
-
-
-              div.innerHTML =
-                html;
-
-
-              div
-                .querySelector(".delete")
-                .addEventListener(
-                  "click",
-                  async () => {
-
-                    if (
-                      confirm(
-                        "Bạn có chắc muốn xóa bài này?"
-                      )
-                    ) {
-
-                      await remove(
-                        ref(
-                          db,
-                          "posts/" + id
-                        )
-                      );
-
-                    }
-
-                  }
-                );
-
-
-              list.appendChild(div);
-
-            }
-          );
-
-      }
     );
 
-  }
+}
+
+
+document
+.getElementById("saveHome")
+.addEventListener("click", async () => {
+
+    const title =
+        document
+        .getElementById("homeTitle")
+        .value;
+
+    const content =
+        document
+        .getElementById("homeContent")
+        .value;
+
+    try{
+
+        await set(
+            ref(db,"siteContent/home"),
+            {
+                title,
+                content
+            }
+        );
+
+        alert("✅ Đã lưu trang chủ!");
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+});
+
+
+// ===============================
+// ABOUT
+// ===============================
+
+function loadAbout(){
+
+    onValue(
+        ref(db,"siteContent/about"),
+        snapshot => {
+
+            const data =
+                snapshot.val();
+
+            if(!data) return;
+
+            document
+            .getElementById("aboutContent")
+            .value =
+                data.content || "";
+
+        }
+    );
+
+}
+
+
+document
+.getElementById("saveAbout")
+.addEventListener("click", async () => {
+
+    const content =
+        document
+        .getElementById("aboutContent")
+        .value;
+
+    try{
+
+        await set(
+            ref(db,"siteContent/about"),
+            {
+                content
+            }
+        );
+
+        alert("✅ Đã lưu giới thiệu!");
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+});
+
+
+// ===============================
+// NEWS LIST
+// ===============================
+
+function loadNews(){
+
+    onValue(
+        ref(db,"posts"),
+        snapshot => {
+
+            const newsList =
+                document.getElementById("newsList");
+
+            newsList.innerHTML = "";
+
+
+            const data =
+                snapshot.val();
+
+
+            if(!data){
+
+                newsList.innerHTML =
+                    "<p>Chưa có bài viết.</p>";
+
+                return;
+            }
+
+
+            const posts =
+                Object.entries(data)
+                .reverse();
+
+
+            posts.forEach(
+            ([id,post]) => {
+
+                const div =
+                    document.createElement("div");
+
+                div.className =
+                    "post";
+
+
+                let imageHTML = "";
+
+
+                if(post.image){
+
+                    imageHTML =
+                    `
+                    <img
+                        src="${escapeHTML(post.image)}"
+                        onerror="this.style.display='none'"
+                    >
+                    `;
+
+                }
+
+
+                div.innerHTML =
+                `
+                    <h3>
+                        ${escapeHTML(post.title || "")}
+                    </h3>
+
+                    <div class="post-date">
+                        ${formatDate(post.date)}
+                    </div>
+
+                    <p>
+                        ${escapeHTML(post.content || "")}
+                    </p>
+
+                    ${imageHTML}
+
+                    <br>
+
+                    <button
+                        class="btn"
+                        data-delete="${id}"
+                    >
+                        🗑️ Xóa bài
+                    </button>
+                `;
+
+
+                newsList.appendChild(div);
+
+
+                div
+                .querySelector("[data-delete]")
+                .addEventListener(
+                    "click",
+                    () => deleteNews(id)
+                );
+
+            });
+
+        }
+    );
+
+}
+
+
+// ===============================
+// DELETE NEWS
+// ===============================
+
+async function deleteNews(id){
+
+    const ok =
+        confirm(
+            "Bạn có chắc muốn xóa bài viết này?"
+        );
+
+
+    if(!ok) return;
+
+
+    try{
+
+        await remove(
+            ref(db,"posts/" + id)
+        );
+
+        alert("✅ Đã xóa bài!");
+
+    }catch(error){
+
+        alert(
+            "❌ Không thể xóa: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+// ===============================
+// ACTIVITY
+// ===============================
+
+function loadActivity(){
+
+    onValue(
+        ref(db,"siteContent/activity"),
+        snapshot => {
+
+            const data =
+                snapshot.val();
+
+            if(!data) return;
+
+            document
+            .getElementById("activityTitle")
+            .value =
+                data.title || "";
+
+            document
+            .getElementById("activityContent")
+            .value =
+                data.content || "";
+
+        }
+    );
+
+}
+
+
+document
+.getElementById("saveActivity")
+.addEventListener("click", async () => {
+
+    try{
+
+        await set(
+            ref(db,"siteContent/activity"),
+            {
+
+                title:
+                    document
+                    .getElementById("activityTitle")
+                    .value,
+
+                content:
+                    document
+                    .getElementById("activityContent")
+                    .value
+
+            }
+        );
+
+        alert("✅ Đã lưu hoạt động!");
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+});
+
+
+// ===============================
+// MUSIC
+// ===============================
+
+function loadMusic(){
+
+    onValue(
+        ref(db,"siteContent/music"),
+        snapshot => {
+
+            const data =
+                snapshot.val();
+
+            if(!data) return;
+
+            document
+            .getElementById("musicTitle")
+            .value =
+                data.title || "";
+
+            document
+            .getElementById("musicContent")
+            .value =
+                data.content || "";
+
+        }
+    );
+
+}
+
+
+document
+.getElementById("saveMusic")
+.addEventListener("click", async () => {
+
+    try{
+
+        await set(
+            ref(db,"siteContent/music"),
+            {
+
+                title:
+                    document
+                    .getElementById("musicTitle")
+                    .value,
+
+                content:
+                    document
+                    .getElementById("musicContent")
+                    .value
+
+            }
+        );
+
+        alert("✅ Đã lưu thánh nhạc!");
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+});
+
+
+// ===============================
+// CONTACT
+// ===============================
+
+function loadContact(){
+
+    onValue(
+        ref(db,"siteContent/contact"),
+        snapshot => {
+
+            const data =
+                snapshot.val();
+
+            if(!data) return;
+
+            document
+            .getElementById("contactContent")
+            .value =
+                data.content || "";
+
+        }
+    );
+
+}
+
+
+document
+.getElementById("saveContact")
+.addEventListener("click", async () => {
+
+    try{
+
+        await set(
+            ref(db,"siteContent/contact"),
+            {
+
+                content:
+                    document
+                    .getElementById("contactContent")
+                    .value
+
+            }
+        );
+
+        alert("✅ Đã lưu liên hệ!");
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+});
+
+
+// ===============================
+// LOGO
+// ===============================
+
+function loadLogo(){
+
+    onValue(
+        ref(db,"siteContent/logo"),
+        snapshot => {
+
+            const data =
+                snapshot.val();
+
+            if(!data) return;
+
+            const url =
+                data.url || "";
+
+            document
+            .getElementById("logoUrl")
+            .value = url;
+
+
+            if(url){
+
+                document
+                .getElementById("logoPreview")
+                .src = url;
+
+                document
+                .getElementById("logoPreview")
+                .style.display =
+                    "block";
+
+            }
+
+        }
+    );
+
+}
+
+
+document
+.getElementById("logoUrl")
+.addEventListener("input", () => {
+
+    const url =
+        document
+        .getElementById("logoUrl")
+        .value
+        .trim();
+
+
+    const preview =
+        document
+        .getElementById("logoPreview");
+
+
+    if(url){
+
+        preview.src = url;
+
+        preview.style.display =
+            "block";
+
+    }else{
+
+        preview.style.display =
+            "none";
+
+    }
+
+});
+
+
+document
+.getElementById("saveLogo")
+.addEventListener("click", async () => {
+
+    const url =
+        document
+        .getElementById("logoUrl")
+        .value
+        .trim();
+
+
+    try{
+
+        await set(
+            ref(db,"siteContent/logo"),
+            {
+                url
+            }
+        );
+
+        alert("✅ Đã lưu logo!");
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+});
+
+
+// ===============================
+// HỖ TRỢ
+// ===============================
+
+function formatDate(date){
+
+    if(!date) return "";
+
+    try{
+
+        return new Date(date)
+        .toLocaleString("vi-VN");
+
+    }catch{
+
+        return date;
+
+    }
+
+}
+
+
+function escapeHTML(value){
+
+    return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
 
 </script>
 
