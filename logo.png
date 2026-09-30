@@ -1,19 +1,56 @@
-<input type="file" id="logoInput" accept="image/*">
+<div id="logo" class="panel">
+  <div class="box">
+    <h2>🖼️ Logo Hội</h2>
 
-<script>
-document.getElementById("logoInput").addEventListener("change", function () {
-    const file = this.files[0];
-    if (!file) return;
+    <div style="
+      display:flex;
+      align-items:center;
+      gap:18px;
+      padding:18px;
+      border:1px solid #ddd;
+      border-radius:16px;
+      background:#fafafa;
+    ">
 
-    const reader = new FileReader();
+      <img
+        src="./logo.png"
+        alt="Beloved Catholic Children"
+        style="
+          width:100px;
+          height:100px;
+          object-fit:contain;
+          border-radius:14px;
+          background:white;
+          padding:8px;
+          box-sizing:border-box;
+        "
+      >
 
-    reader.onload = function () {
-        const a = document.createElement("a");
-        a.href = reader.result;
-        a.download = "logo.png";
-        a.click();
-    };
+      <div>
+        <div style="
+          font-size:18px;
+          font-weight:700;
+          margin-bottom:7px;
+        ">
+          BELOVED CATHOLIC CHILDREN
+        </div>
 
-    reader.readAsDataURL(file);
-});
-</script>
+        <div style="
+          font-size:13px;
+          color:#777;
+        ">
+          📁 logo.png
+        </div>
+
+        <div style="
+          margin-top:8px;
+          font-size:13px;
+          color:green;
+        ">
+          ● Logo đang hoạt động
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
