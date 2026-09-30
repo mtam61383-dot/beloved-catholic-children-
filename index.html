@@ -15,288 +15,196 @@
 
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: #f5f7fb;
+      background: #f7f8fc;
       color: #222;
       line-height: 1.6;
     }
 
-    /* HEADER */
     header {
-      background: linear-gradient(135deg, #8b0000, #c62828);
-      color: white;
-      padding: 18px 20px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 3px 12px rgba(0,0,0,.15);
     }
 
     .header-inner {
       max-width: 1100px;
       margin: auto;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 15px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand img {
-      width: 58px;
-      height: 58px;
+    .header-inner img {
+      width: 65px;
+      height: 65px;
       object-fit: contain;
-      border-radius: 50%;
-      background: white;
-      padding: 3px;
     }
 
-    .brand-text h1 {
-      font-size: 20px;
-      margin: 0;
+    .brand h1 {
+      font-size: 21px;
+      color: #173b7a;
+      margin-bottom: 2px;
     }
 
-    .brand-text p {
-      font-size: 12px;
-      opacity: .9;
+    .brand p {
+      color: #777;
+      font-size: 14px;
     }
 
-    /* MENU */
     nav {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding-top: 15px;
+      background: #173b7a;
     }
 
     nav ul {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 10px;
       list-style: none;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     nav a {
+      display: block;
+      padding: 13px 18px;
       color: white;
       text-decoration: none;
-      padding: 8px 13px;
-      border-radius: 20px;
-      display: block;
-      font-size: 14px;
-      transition: .2s;
+      font-weight: bold;
     }
 
-    nav a:hover,
-    nav a.active {
-      background: rgba(255,255,255,.2);
+    nav a:hover {
+      background: rgba(255,255,255,.15);
     }
 
-    /* MAIN */
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 25px 15px 50px;
-    }
-
-    .section {
-      display: none;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    /* HERO */
     .hero {
-      background: linear-gradient(
-        135deg,
-        rgba(139,0,0,.95),
-        rgba(198,40,40,.88)
-      );
-      color: white;
-      border-radius: 20px;
-      padding: 45px 25px;
+      max-width: 1100px;
+      margin: 25px auto;
+      padding: 45px 20px;
       text-align: center;
-      margin-bottom: 25px;
-      box-shadow: 0 8px 25px rgba(0,0,0,.12);
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 3px 15px rgba(0,0,0,.08);
     }
 
     .hero img {
-      width: 120px;
-      height: 120px;
+      width: 150px;
+      height: 150px;
       object-fit: contain;
-      background: white;
-      border-radius: 50%;
-      padding: 6px;
       margin-bottom: 15px;
     }
 
     .hero h2 {
+      color: #173b7a;
       font-size: 30px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .hero p {
-      max-width: 700px;
+      color: #666;
+      font-size: 17px;
+    }
+
+    main {
+      max-width: 1100px;
       margin: auto;
-      opacity: .95;
+      padding: 0 20px 40px;
     }
 
-    /* BOX */
-    .box {
+    section {
       background: white;
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 15px rgba(0,0,0,.07);
-    }
-
-    .box h2 {
-      color: #8b0000;
-      margin-bottom: 15px;
-    }
-
-    .box h3 {
-      color: #a00000;
-      margin: 15px 0 8px;
-    }
-
-    /* GRID */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .card {
-      background: white;
+      margin: 20px 0;
+      padding: 25px;
       border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 3px 14px rgba(0,0,0,.07);
-      transition: transform .2s;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
     }
 
-    .card:hover {
-      transform: translateY(-3px);
+    section h2 {
+      color: #173b7a;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 8px;
     }
 
-    .card h3 {
-      color: #8b0000;
-      margin-bottom: 8px;
+    .news-item,
+    .activity-item,
+    .music-item {
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
     }
 
-    /* POSTS */
-    .post {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 15px rgba(0,0,0,.07);
+    .news-item:last-child,
+    .activity-item:last-child,
+    .music-item:last-child {
+      border-bottom: none;
     }
 
-    .post img {
-      width: 100%;
-      max-height: 420px;
-      object-fit: cover;
+    .news-item img {
+      max-width: 100%;
+      max-height: 350px;
       display: block;
-    }
-
-    .post-content {
-      padding: 20px;
-    }
-
-    .post h3 {
-      color: #8b0000;
-      margin-bottom: 8px;
+      margin: 12px 0;
+      border-radius: 10px;
     }
 
     .date {
       color: #888;
       font-size: 13px;
-      margin-bottom: 10px;
     }
 
-    /* BUTTON */
-    .btn {
-      display: inline-block;
-      border: none;
-      background: #8b0000;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 22px;
-      cursor: pointer;
-      text-decoration: none;
-      margin-top: 10px;
-    }
-
-    .btn:hover {
-      background: #a90000;
-    }
-
-    /* CONTACT */
-    .contact-item {
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    .contact-item:last-child {
-      border-bottom: none;
-    }
-
-    /* FOOTER */
     footer {
-      background: #222;
+      margin-top: 30px;
+      background: #173b7a;
       color: white;
       text-align: center;
       padding: 25px 15px;
-      margin-top: 20px;
     }
 
     footer p {
       margin: 5px 0;
-      font-size: 13px;
-      opacity: .9;
     }
 
-    /* MOBILE */
-    @media (max-width: 750px) {
-
+    @media (max-width: 600px) {
       .header-inner {
-        flex-direction: column;
-        text-align: center;
+        padding: 10px 15px;
       }
 
-      .brand {
-        justify-content: center;
+      .header-inner img {
+        width: 52px;
+        height: 52px;
       }
 
-      nav ul {
-        gap: 4px;
+      .brand h1 {
+        font-size: 16px;
+      }
+
+      .brand p {
+        font-size: 12px;
       }
 
       nav a {
-        font-size: 12px;
-        padding: 7px 9px;
+        padding: 10px 11px;
+        font-size: 13px;
       }
 
       .hero {
-        padding: 35px 18px;
+        margin: 15px;
+        padding: 30px 15px;
       }
 
       .hero h2 {
-        font-size: 24px;
+        font-size: 23px;
       }
 
-      .grid {
-        grid-template-columns: 1fr;
+      main {
+        padding: 0 15px 30px;
       }
 
-      .box {
-        padding: 17px;
+      section {
+        padding: 18px;
       }
     }
   </style>
@@ -304,555 +212,271 @@
 
 <body>
 
-<!-- HEADER -->
 <header>
-
   <div class="header-inner">
 
+    <!-- LOGO DUY NHẤT -->
+    <img src="./logo.png" alt="Beloved Catholic Children">
+
     <div class="brand">
-
-      <img
-        id="headerLogo"
-        src="./logo.png"
-        alt="Beloved Catholic Children"
-      >
-
-      <div class="brand-text">
-        <h1>BELOVED CATHOLIC CHILDREN</h1>
-        <p>Yêu mến đơn sơ - Thánh hóa</p>
-      </div>
-
+      <h1>BELOVED CATHOLIC CHILDREN</h1>
+      <p>Yêu mến đơn sơ - Thánh hóa</p>
     </div>
 
   </div>
 
-  <!-- MENU -->
   <nav>
     <ul>
-
-      <li>
-        <a href="#" class="active" onclick="showSection('home', this)">
-          🏠 Trang chủ
-        </a>
-      </li>
-
-      <li>
-        <a href="#" onclick="showSection('about', this)">
-          ✝️ Giới thiệu
-        </a>
-      </li>
-
-      <li>
-        <a href="#" onclick="showSection('news', this)">
-          📰 Tin tức
-        </a>
-      </li>
-
-      <li>
-        <a href="#" onclick="showSection('activity', this)">
-          📅 Hoạt động
-        </a>
-      </li>
-
-      <li>
-        <a href="#" onclick="showSection('music', this)">
-          🎵 Thánh nhạc
-        </a>
-      </li>
-
-      <li>
-        <a href="#" onclick="showSection('contact', this)">
-          📞 Liên hệ
-        </a>
-      </li>
-
+      <li><a href="#home">Trang chủ</a></li>
+      <li><a href="#about">Giới thiệu</a></li>
+      <li><a href="#news">Tin tức</a></li>
+      <li><a href="#activity">Hoạt động</a></li>
+      <li><a href="#music">Thánh nhạc</a></li>
+      <li><a href="#contact">Liên hệ</a></li>
     </ul>
   </nav>
-
 </header>
 
 
 <main>
 
-<!-- ================= TRANG CHỦ ================= -->
+  <section class="hero" id="home">
 
-<section id="home" class="section active">
+    <!-- KHÔNG CÓ "LOGO HỘI" -->
+    <img src="./logo.png" alt="Beloved Catholic Children">
 
-  <div class="hero">
-
-    <img
-      src="./logo.png"
-      alt="Beloved Catholic Children"
-    >
-
-    <h2>Beloved Catholic Children</h2>
+    <h2>BELOVED CATHOLIC CHILDREN</h2>
 
     <p>
-      Một gia đình nhỏ dành cho những người trẻ Công giáo,
-      cùng nhau sống đức tin, học hỏi, phục vụ và loan báo Tin Mừng.
-    </p>
-
-  </div>
-
-
-  <div class="box">
-
-    <h2>🌿 Chào mừng bạn</h2>
-
-    <p>
-      Chào mừng bạn đến với website chính thức của
-      <strong>Beloved Catholic Children</strong>.
+      Yêu mến đơn sơ - Thánh hóa
     </p>
 
     <p style="margin-top:10px;">
-      Nơi đây cập nhật những hoạt động, tin tức,
-      chương trình sinh hoạt và những nội dung Công giáo
-      dành cho các bạn trẻ.
+      Cùng nhau sống Đức Tin, phục vụ và lan tỏa tình yêu Chúa.
     </p>
 
-  </div>
+  </section>
 
 
-  <div class="grid">
-
-    <div class="card">
-      <h3>✝️ Đức tin</h3>
-      <p>
-        Cùng nhau học hỏi và sống đức tin Công giáo
-        giữa cuộc sống hiện đại.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>🤝 Hiệp hành</h3>
-      <p>
-        Cùng bước đi, cùng phục vụ và cùng xây dựng
-        một cộng đoàn yêu thương.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>❤️ Yêu thương</h3>
-      <p>
-        Sống đơn sơ, phục vụ mọi người và đem tình yêu
-        của Chúa đến với tha nhân.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= GIỚI THIỆU ================= -->
-
-<section id="about" class="section">
-
-  <div class="box">
-
-    <h2>✝️ Giới thiệu về Hội</h2>
-
-    <h3>Beloved Catholic Children</h3>
+  <section id="about">
+    <h2>Giới thiệu</h2>
 
     <p>
-      Beloved Catholic Children là một cộng đoàn dành cho
-      các bạn trẻ Công giáo, cùng nhau học hỏi đức tin,
-      cầu nguyện, sinh hoạt và phục vụ.
+      <strong>Beloved Catholic Children</strong> là nơi quy tụ các bạn trẻ
+      Công giáo cùng nhau học hỏi Đức Tin, cầu nguyện, sinh hoạt và phục vụ.
     </p>
 
-    <h3>Sứ mạng</h3>
-
-    <p>
-      Giúp người trẻ biết yêu mến Chúa, sống tình huynh đệ
-      và trở thành những chứng nhân của Tin Mừng trong
-      môi trường sống của mình.
+    <p style="margin-top:10px;">
+      Với tinh thần <strong>“Yêu mến đơn sơ - Thánh hóa”</strong>,
+      chúng ta cùng sống Đức Tin giữa cuộc sống hiện đại.
     </p>
-
-    <h3>Phương châm</h3>
-
-    <p>
-      <strong>“Yêu mến đơn sơ - Thánh hóa.”</strong>
-    </p>
-
-  </div>
-
-</section>
+  </section>
 
 
-<!-- ================= TIN TỨC ================= -->
-
-<section id="news" class="section">
-
-  <div class="box">
-
-    <h2>📰 Tin tức</h2>
+  <section id="news">
+    <h2>Tin tức</h2>
 
     <div id="newsList">
-
-      <p>
-        Đang tải tin tức...
-      </p>
-
+      <p>Đang tải tin tức...</p>
     </div>
-
-  </div>
-
-</section>
+  </section>
 
 
-<!-- ================= HOẠT ĐỘNG ================= -->
-
-<section id="activity" class="section">
-
-  <div class="box">
-
-    <h2>📅 Hoạt động</h2>
+  <section id="activity">
+    <h2>Hoạt động</h2>
 
     <div id="activityContent">
-
-      <p>
-        Đang tải thông tin hoạt động...
-      </p>
-
+      <p>Đang tải hoạt động...</p>
     </div>
-
-  </div>
-
-</section>
+  </section>
 
 
-<!-- ================= THÁNH NHẠC ================= -->
-
-<section id="music" class="section">
-
-  <div class="box">
-
-    <h2>🎵 Thánh nhạc</h2>
+  <section id="music">
+    <h2>Thánh nhạc</h2>
 
     <div id="musicContent">
-
-      <p>
-        Đang tải nội dung thánh nhạc...
-      </p>
-
+      <p>Đang tải thánh nhạc...</p>
     </div>
-
-  </div>
-
-</section>
+  </section>
 
 
-<!-- ================= LIÊN HỆ ================= -->
-
-<section id="contact" class="section">
-
-  <div class="box">
-
-    <h2>📞 Liên hệ</h2>
+  <section id="contact">
+    <h2>Liên hệ</h2>
 
     <div id="contactContent">
-
-      <div class="contact-item">
-        <strong>📱 TikTok</strong>
-        <p>Beloved Catholic Children</p>
-      </div>
-
-      <div class="contact-item">
-        <strong>📘 Facebook</strong>
-        <p>Beloved Catholic Children</p>
-      </div>
-
+      <p>Đang tải thông tin liên hệ...</p>
     </div>
-
-  </div>
-
-</section>
+  </section>
 
 </main>
 
 
-<!-- FOOTER -->
-
 <footer>
-
-  <p>
-    ✝️ BELOVED CATHOLIC CHILDREN
-  </p>
-
-  <p>
-    Yêu mến đơn sơ - Thánh hóa
-  </p>
-
-  <p>
-    © 2026 Beloved Catholic Children
-  </p>
-
+  <p><strong>BELOVED CATHOLIC CHILDREN</strong></p>
+  <p>Yêu mến đơn sơ - Thánh hóa</p>
 </footer>
 
-
-<!-- ================= JAVASCRIPT ================= -->
 
 <script type="module">
 
   import {
     initializeApp
-  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
   import {
     getDatabase,
     ref,
     onValue
-  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
   const firebaseConfig = {
-
-    apiKey:
-      "AIzaSyA_b4h2_RP7vSMvM8eMxplFr7WSR2flzdg",
-
-    authDomain:
-      "beloved-catholic-children.firebaseapp.com",
-
-    projectId:
-      "beloved-catholic-children",
-
-    storageBucket:
-      "beloved-catholic-children.firebasestorage.app",
-
-    messagingSenderId:
-      "657011413453",
-
-    appId:
-      "1:657011413453:web:02fbdbd6ec8f5b04157484",
-
-    measurementId:
-      "G-VTL7T0S9EY"
-
+    apiKey: "AIzaSyA_b4h2_RP7vSMvM8eMxplFr7WSR2flzdg",
+    authDomain: "beloved-catholic-children.firebaseapp.com",
+    projectId: "beloved-catholic-children",
+    storageBucket: "beloved-catholic-children.firebasestorage.app",
+    messagingSenderId: "657011413453",
+    appId: "1:657011413453:web:02fbdbd6ec8f5b04157484",
+    measurementId: "G-VTL7T0S9EY"
   };
 
 
-  const app =
-    initializeApp(firebaseConfig);
-
-  const db =
-    getDatabase(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
 
 
-  /* ================= TIN TỨC ================= */
+  /* =========================
+     TIN TỨC
+  ========================= */
 
-  onValue(ref(db, "posts"), snapshot => {
+  onValue(ref(db, "posts"), (snapshot) => {
 
-    const data =
-      snapshot.val();
-
-    const list =
-      document.getElementById("newsList");
+    const data = snapshot.val();
+    const box = document.getElementById("newsList");
 
     if (!data) {
-
-      list.innerHTML =
-        "<p>Chưa có tin tức.</p>";
-
+      box.innerHTML = "<p>Chưa có tin tức.</p>";
       return;
     }
 
+    box.innerHTML = "";
 
-    const posts =
-      Object.values(data).reverse();
+    Object.values(data)
+      .reverse()
+      .forEach(post => {
 
+        const item = document.createElement("div");
+        item.className = "news-item";
 
-    list.innerHTML =
-      posts.map(post => `
+        let image = "";
 
-        <article class="post">
+        if (post.image) {
+          image = `
+            <img src="${post.image}" alt="">
+          `;
+        }
 
-          ${
-            post.image
-            ?
-            `<img
-              src="${post.image}"
-              alt="${post.title || "Tin tức"}"
-            >`
-            :
-            ""
-          }
+        item.innerHTML = `
+          <h3>${post.title || ""}</h3>
+          <div class="date">${post.date || ""}</div>
+          ${image}
+          <p>${post.content || ""}</p>
+        `;
 
-          <div class="post-content">
-
-            <h3>
-              ${post.title || ""}
-            </h3>
-
-            <div class="date">
-              ${post.date || ""}
-            </div>
-
-            <p>
-              ${post.content || ""}
-            </p>
-
-          </div>
-
-        </article>
-
-      `).join("");
-
-  });
-
-
-  /* ================= GIỚI THIỆU ================= */
-
-  onValue(ref(db, "siteContent/about"), snapshot => {
-
-    const data =
-      snapshot.val();
-
-    if (!data) return;
-
-    const section =
-      document.querySelector("#about .box");
-
-    if (data.content) {
-
-      section.innerHTML = `
-        <h2>✝️ Giới thiệu về Hội</h2>
-        ${data.content}
-      `;
-
-    }
-
-  });
-
-
-  /* ================= HOẠT ĐỘNG ================= */
-
-  onValue(ref(db, "siteContent/activity"), snapshot => {
-
-    const data =
-      snapshot.val();
-
-    if (!data) return;
-
-    const content =
-      document.getElementById("activityContent");
-
-    content.innerHTML =
-      data.content || "";
-
-  });
-
-
-  /* ================= THÁNH NHẠC ================= */
-
-  onValue(ref(db, "siteContent/music"), snapshot => {
-
-    const data =
-      snapshot.val();
-
-    if (!data) return;
-
-    const content =
-      document.getElementById("musicContent");
-
-    content.innerHTML =
-      data.content || "";
-
-  });
-
-
-  /* ================= LIÊN HỆ ================= */
-
-  onValue(ref(db, "siteContent/contact"), snapshot => {
-
-    const data =
-      snapshot.val();
-
-    if (!data) return;
-
-    const content =
-      document.getElementById("contactContent");
-
-    content.innerHTML =
-      data.content || "";
-
-  });
-
-
-  /* ================= LOGO ================= */
-
-  onValue(ref(db, "siteContent/logo"), snapshot => {
-
-    const data =
-      snapshot.val();
-
-    if (!data || !data.url) return;
-
-    document
-      .querySelectorAll(
-        "#headerLogo, #home img"
-      )
-      .forEach(img => {
-
-        img.src =
-          data.url;
-
+        box.appendChild(item);
       });
 
   });
 
-</script>
 
+  /* =========================
+     HOẠT ĐỘNG
+  ========================= */
 
-<script>
+  onValue(ref(db, "siteContent/activity"), (snapshot) => {
 
-/* ================= CHUYỂN TRANG ================= */
+    const data = snapshot.val();
+    const box = document.getElementById("activityContent");
 
-function showSection(id, element) {
+    if (!data) {
+      box.innerHTML = "<p>Chưa có thông tin hoạt động.</p>";
+      return;
+    }
 
-  document
-    .querySelectorAll(".section")
-    .forEach(section => {
+    if (typeof data === "string") {
+      box.innerHTML = data;
+      return;
+    }
 
-      section.classList.remove("active");
-
-    });
-
-
-  const target =
-    document.getElementById(id);
-
-  if (target) {
-
-    target.classList.add("active");
-
-  }
-
-
-  document
-    .querySelectorAll("nav a")
-    .forEach(link => {
-
-      link.classList.remove("active");
-
-    });
-
-
-  if (element) {
-
-    element.classList.add("active");
-
-  }
-
-
-  window.scrollTo({
-
-    top: 0,
-
-    behavior: "smooth"
+    box.innerHTML = Object.values(data)
+      .map(item => `
+        <div class="activity-item">
+          ${typeof item === "string" ? item : JSON.stringify(item)}
+        </div>
+      `)
+      .join("");
 
   });
 
-}
+
+  /* =========================
+     THÁNH NHẠC
+  ========================= */
+
+  onValue(ref(db, "siteContent/music"), (snapshot) => {
+
+    const data = snapshot.val();
+    const box = document.getElementById("musicContent");
+
+    if (!data) {
+      box.innerHTML = "<p>Chưa có thông tin thánh nhạc.</p>";
+      return;
+    }
+
+    if (typeof data === "string") {
+      box.innerHTML = data;
+      return;
+    }
+
+    box.innerHTML = Object.values(data)
+      .map(item => `
+        <div class="music-item">
+          ${typeof item === "string" ? item : JSON.stringify(item)}
+        </div>
+      `)
+      .join("");
+
+  });
+
+
+  /* =========================
+     LIÊN HỆ
+  ========================= */
+
+  onValue(ref(db, "siteContent/contact"), (snapshot) => {
+
+    const data = snapshot.val();
+    const box = document.getElementById("contactContent");
+
+    if (!data) {
+      box.innerHTML = "<p>Chưa có thông tin liên hệ.</p>";
+      return;
+    }
+
+    if (typeof data === "string") {
+      box.innerHTML = data;
+      return;
+    }
+
+    box.innerHTML = Object.values(data)
+      .map(item => `
+        <p>
+          ${typeof item === "string" ? item : JSON.stringify(item)}
+        </p>
+      `)
+      .join("");
+
+  });
 
 </script>
 
